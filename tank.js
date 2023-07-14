@@ -134,7 +134,7 @@ class Tank {
 		}
 	}
 
-	MoveIsOkay(id, Zx, Zy) {
+	static MoveIsOkay(id, Zx, Zy) {
 		Object.values(Tank.tanks).forEach(tank => {
 			if (id != tank.id) {
 				if (Math.abs(Zx - tank.Zx) < 1 || Math.abs(Zy - tank.Zy) < 1) {
