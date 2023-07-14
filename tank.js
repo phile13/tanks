@@ -41,6 +41,7 @@ class Tank {
 
 
 	HandleMessages(msg) {
+		console.log("msg:" + msg);
 		let req = null;
 		try {
 			req = JSON.parse(msg);
@@ -50,6 +51,7 @@ class Tank {
 
 		if ("id" in req && "action" in req) {
 			if (req.action == "new") {
+				console.log("new");
 				let x = 0;
 				let y = 0;
 				let Zx = 0;
@@ -68,6 +70,7 @@ class Tank {
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.id in Tank.tanks) {
+				console.log("action:" + req.action);
 				let change_requested = true;
 				let x = this.x;
 				let y = this.y;
