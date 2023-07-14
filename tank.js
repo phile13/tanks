@@ -11,7 +11,7 @@ class Tank {
 
 	static UpdateOtherTanks(changed_tank_msg) {
 		Object.values(Tank.tanks).forEach(tank => {
-			tank.Socket.send(changed_tank_msg);
+			tank.server.send(changed_tank_msg);
 		});
 	}
 
@@ -22,9 +22,10 @@ class Tank {
 	Hy = 0;
 	Zx = 0;
 	Zy = 0;
-	socket = null;
+	client = null;
+	server = null;
 
-	constructor(socket) {
+	constructor(client, server) {
 		this.id = Tank.GetNextId();
 		Tank.tanks[this.id] = this;
 		this.x = 0;
@@ -34,12 +35,13 @@ class Tank {
 		this.Zx = 0;
 		this.Zy = 0;
 
-		this.socket = socket;
-		this.socket.on("message", this.HandleMessages);
-		this.socket.on("close", () => {
+		this.client = client;
+		this.client.on("message", this.HandleMessages);
+		this.client.on("close", () => {
 			console.log("closed");
 			delete Tank.tanks[this.id];
 		});
+		this.server = server;
 	}
 
 
@@ -69,7 +71,7 @@ class Tank {
 				this.y = y;
 				this.Zx = Zx;
 				this.Zy = Zy;
-				this.socket.send('{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}');
+				this.server.send('{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}');
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.id in Tank.tanks) {
@@ -126,11 +128,11 @@ class Tank {
 				}
 			}
 			else {
-				this.socket.send("action[" + req.action + "]: unknown");
+				this.server.send("action[" + req.action + "]: unknown");
 			}
 		}
 		else {
-			this.socket.send("json not correct" + JSON.stringify(msg));
+			this.server.send("json not correct" + JSON.stringify(msg));
 		}
 	}
 
