@@ -38,7 +38,7 @@
                             stage = new PIXI.Container();
                             renderer.render(stage);
 
-                            ws.send('{"id":0,"action":"NEW"}')
+                            ws.send('{"id":'+myid+',"action":"NW"}')
                             break;
                         case "tank":
                             if (!(rep.id in tanks)) {
