@@ -72,8 +72,7 @@ class Tank {
 				this.Zx = Zx;
 				this.Zy = Zy;
 
-				let rep_msg = '{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}';
-				console.log(rep_msg);
+				let rep_msg = '{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + ',"length":' + GameSpace.length + ',"depth":' + GameSpace.depth +'}';
 				this.client.send(rep_msg);
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
