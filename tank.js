@@ -13,7 +13,16 @@ class Tank {
 		Object.values(Tank.tanks).forEach(tank => {
 			tank.Socket.send(changed_tank_msg);
 		});
-    }
+	}
+
+	#id = -1;
+	#x = 0;
+	#y = 0;
+	#Hx = 0;
+	#Hy = 0;
+	#Zx = 0;
+	#Zy = 0;
+	#socket = null;
 
 	constructor(socket) {
 		this.#id = Tank.GetNextId();
