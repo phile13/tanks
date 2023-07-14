@@ -42,6 +42,8 @@ class Tank {
 			delete Tank.tanks[this.id];
 		});
 		this.server = server;
+		console.log("client:" + client);
+		console.log("server:" + server);
 	}
 
 
