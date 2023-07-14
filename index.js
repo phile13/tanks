@@ -6,6 +6,7 @@ const WebSocket = require('ws');
 let server = new WebSocket.Server({port: 32123});
 server.on("open", () => {
 	console.log("opened");
+	server.send("hi");
 });
 
 server.on("connection", (client) => {
