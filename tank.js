@@ -62,8 +62,8 @@ class Tank {
 				let Zx = 0;
 				let Zy = 0;
 				do {
-					x = 1 + Math.random() * (GameSpace.width - 2);
-					y = 1 + Math.random() * (GameSpace.height - 2);
+					x = Math.floor(1 + Math.random() * (GameSpace.width - 2));
+					y = Math.floor(1 + Math.random() * (GameSpace.height - 2));
 					Zx = this.x / Tank.SIZE;
 					Zy = this.y / Tank.SIZE;
 				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy));
