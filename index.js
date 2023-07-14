@@ -10,7 +10,6 @@ server.on("open", () => {
 
 server.on("connection", (client) => {
 	console.log("connection");
-	client.send("hi");
 	new Tank(client, server);
 });
 

@@ -41,6 +41,7 @@ class Tank {
 			console.log("closed");
 			delete Tank.tanks[this.id];
 		});
+		this.client.send("hi");
 		this.server = server;
 		console.log("client:" + client);
 		console.log("server:" + ("send" in server));
