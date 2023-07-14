@@ -36,7 +36,10 @@ class Tank {
 
 		this.socket = socket;
 		this.socket.on("message", this.HandleMessages);
-		this.socket.on("close", () => { delete Tank.tanks[this.id] });
+		this.socket.on("close", () => {
+			console.log("closed");
+			delete Tank.tanks[this.id];
+		});
 	}
 
 
