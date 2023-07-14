@@ -10,7 +10,7 @@ class Tank {
 	static RADIUS = 10;
 
 	static UpdateOtherTanks(changed_tank_msg) {
-		Object.values(this.#tanks).forEach(tank => {
+		Object.values(Tank.tanks).forEach(tank => {
 			tank.Socket.send(changed_tank_msg);
 		});
     }
@@ -142,7 +142,7 @@ class Tank {
 	}
 
 	MoveIsOkay(id, Zx, Zy) {
-		Object.values(this.#tanks).forEach(tank => {
+		Object.values(Tank.tanks).forEach(tank => {
 			if (id != tank.Id) {
 				if (Math.abs(Zx - tank.Zx) < 1 || Math.abs(Zy - tank.Zy) < 1) {
 					return false;
