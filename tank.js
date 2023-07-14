@@ -43,7 +43,7 @@ class Tank {
 		});
 		this.server = server;
 		console.log("client:" + client);
-		console.log("server:" + server);
+		console.log("server:" + ("send" in server));
 	}
 
 
