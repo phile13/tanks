@@ -53,7 +53,7 @@ class Tank {
 		}
 
 		if ("id" in req && "action" in req) {
-			if (req.action == "new") {
+			if (req.action == "NEW") {
 				console.log("new");
 				let x = 0;
 				let y = 0;
