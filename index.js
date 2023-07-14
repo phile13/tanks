@@ -1,3 +1,4 @@
+const Tank = require("./tank.js");
 const GameSpace = require("./game_space.js");
 GameSpace.Create(512, 512);
 
@@ -9,6 +10,6 @@ server.on("open", () => {
 
 server.on("connection", (client) => {
 	console.log("connection");
-	let player = new Player(client);
+	new Tank(client);
 });
 
