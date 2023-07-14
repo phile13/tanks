@@ -67,6 +67,8 @@ class Tank {
 					Zx = x / Tank.SIZE;
 					Zy = y / Tank.SIZE;
 					console.log("x:" + x + " y:" + y);
+					console.log(GameSpace.MoveIsOkay(Tank.RADIUS, x, y));
+					console.log(Tank.MoveIsOkay(this.id, Zx, Zy));
 				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy));
 				this.x = x;
 				this.y = y;
