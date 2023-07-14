@@ -15,50 +15,28 @@ class Tank {
 		});
 	}
 
-	#id = -1;
-	#x = 0;
-	#y = 0;
-	#Hx = 0;
-	#Hy = 0;
-	#Zx = 0;
-	#Zy = 0;
-	#socket = null;
+	id = -1;
+	x = 0;
+	y = 0;
+	Hx = 0;
+	Hy = 0;
+	Zx = 0;
+	Zy = 0;
+	socket = null;
 
 	constructor(socket) {
-		this.#id = Tank.GetNextId();
-		Tank.tanks[this.#id] = this;
-		this.#x = 0;
-		this.#y = 0;
-		this.#Hx = 0;
-		this.#Hy = 0;
-		this.#Zx = 0;
-		this.#Zy = 0;
+		this.id = Tank.GetNextId();
+		Tank.tanks[this.id] = this;
+		this.x = 0;
+		this.y = 0;
+		this.Hx = 0;
+		this.Hy = 0;
+		this.Zx = 0;
+		this.Zy = 0;
 
-		this.#socket = socket;
-		this.#socket.on("message", this.HandleMessages);
-		this.#socket.on("close", () => { delete Tank.tanks[this.#id] });
-	}
-
-	get Id() {
-		return this.#id;
-	}
-	get x() {
-		return this.#x;
-	}
-	get y() {
-		return this.#y;
-	}
-	get Hx() {
-		return this.#Hx;
-	}
-	get Hy() {
-		return this.#Hy;
-	}
-	get Zx() {
-		return this.#Zx;
-	}
-	get Zy() {
-		return this.#Zy;
+		this.socket = socket;
+		this.socket.on("message", this.HandleMessages);
+		this.socket.on("close", () => { delete Tank.tanks[this.id] });
 	}
 
 
@@ -79,20 +57,20 @@ class Tank {
 				do {
 					x = 1 + Math.random() * (GameSpace.length - 2);
 					y = 1 + Math.random() * (GameSpace.depth - 2);
-					Zx = this.#x / Tank.SIZE;
-					Zy = this.#y / Tank.SIZE;
-				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.#id, Zx, Zy));
-				this.#x = x;
-				this.#y = y;
-				this.#Zx = Zx;
-				this.#Zy = Zy;
-				this.#socket.send('{"type":"new","id":' + this.#id + ',"board":' + GameSpace.BoardToString() + '}');
+					Zx = this.x / Tank.SIZE;
+					Zy = this.y / Tank.SIZE;
+				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy));
+				this.x = x;
+				this.y = y;
+				this.Zx = Zx;
+				this.Zy = Zy;
+				this.socket.send('{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}');
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.id in Tank.tanks) {
 				let change_requested = true;
-				let x = this.#x;
-				let y = this.#y;
+				let x = this.x;
+				let y = this.y;
 				switch (req.action) {
 					case "N":
 						y--;
@@ -128,15 +106,15 @@ class Tank {
 				}
 
 				if (change_requested) {
-					let Zx = this.#x / Tank.SIZE;
-					let Zy = this.#y / Tank.SIZE;
-					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.#id, Zx, Zy)) {
-						this.#Hx = x - this.#x;
-						this.#Hy = y - this.#y;
-						this.#x = x;
-						this.#y = y;
-						this.#Zx = Zx;
-						this.#Zy = Zy;
+					let Zx = this.x / Tank.SIZE;
+					let Zy = this.y / Tank.SIZE;
+					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy)) {
+						this.Hx = x - this.x;
+						this.Hy = y - this.y;
+						this.x = x;
+						this.y = y;
+						this.Zx = Zx;
+						this.Zy = Zy;
 						Tank.UpdateOtherTanks(this.UpdateMessage());
 					}
 				}
@@ -152,7 +130,7 @@ class Tank {
 
 	MoveIsOkay(id, Zx, Zy) {
 		Object.values(Tank.tanks).forEach(tank => {
-			if (id != tank.Id) {
+			if (id != tank.id) {
 				if (Math.abs(Zx - tank.Zx) < 1 || Math.abs(Zy - tank.Zy) < 1) {
 					return false;
 				}
@@ -162,7 +140,7 @@ class Tank {
 	}
 
 	UpdateMessage() {
-		return '{"id":' + this.#id + ',"x":' + this.#x + ',"y":' + this.#y + ',"Hx":' + this.#Hx + ',"Hy":' + this.#Hy + ',"type":"tank"}';
+		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank"}';
     }
 }
 
