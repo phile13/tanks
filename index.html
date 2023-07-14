@@ -29,9 +29,10 @@
                         case "new":
                             myid = rep.id;
                             let board = rep.board;
-                            const app = new PIXI.Application({ background: '#1099bb', width: rep.width, height: rep.height });
-                            document.body.appendChild(app.view);
-
+                            const renderer = PIXI.autoDetectRenderer(rep.width, rep.height);
+                            document.body.appendChild(renderer.view);
+                            const stage = new PIXI.Container();
+                            
                             //drawing procedural texture and use it as a PIXI sprite	
                             let sprite = new PIXI.Sprite(PIXI.Texture.Draw(function (canvas) {
                                 //we are now in a 2D context		
@@ -55,7 +56,9 @@
                                 }
                                 ctx.putImageData(pix, 0, 0);
                             }));
-                            app.stage.addChild(sprite);
+
+                            stage.addChild(sprite);
+                            renderer.render(stage);
 
                             break;
                         case "state":
