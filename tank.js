@@ -11,7 +11,7 @@ class Tank {
 
 	static UpdateOtherTanks(changed_tank_msg) {
 		Object.values(Tank.tanks).forEach(tank => {
-			tank.server.send(changed_tank_msg);
+			tank.client.send(changed_tank_msg);
 		});
 	}
 
@@ -23,9 +23,9 @@ class Tank {
 	Zx = 0;
 	Zy = 0;
 	client = null;
-	server = null;
 
-	constructor(client, server) {
+
+	constructor(client) {
 		this.id = Tank.GetNextId();
 		Tank.tanks[this.id] = this;
 		this.x = 0;
@@ -41,10 +41,6 @@ class Tank {
 			console.log("closed");
 			delete Tank.tanks[this.id];
 		});
-		this.client.send("hi");
-		this.server = server;
-		console.log("client:" + client);
-		console.log("server:" + ("send" in server));
 	}
 
 
@@ -74,7 +70,10 @@ class Tank {
 				this.y = y;
 				this.Zx = Zx;
 				this.Zy = Zy;
-				this.server.send('{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}');
+
+				let rep_msg = '{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + '}';
+				console.log(rep_msg);
+				this.client.send(rep_msg);
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.id in Tank.tanks) {
@@ -131,11 +130,11 @@ class Tank {
 				}
 			}
 			else {
-				this.server.send("action[" + req.action + "]: unknown");
+				this.client.send("action[" + req.action + "]: unknown");
 			}
 		}
 		else {
-			this.server.send("json not correct" + JSON.stringify(msg));
+			this.client.send("json not correct" + JSON.stringify(msg));
 		}
 	}
 
