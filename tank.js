@@ -69,7 +69,7 @@ class Tank {
 					console.log("x:" + x + " y:" + y);
 					console.log(GameSpace.MoveIsOkay(Tank.RADIUS, x, y));
 					console.log(Tank.MoveIsOkay(this.id, Zx, Zy));
-				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy));
+				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) == false || Tank.MoveIsOkay(this.id, Zx, Zy) == false);
 				this.x = x;
 				this.y = y;
 				this.Zx = Zx;
