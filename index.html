@@ -32,8 +32,10 @@
                             const renderer = PIXI.autoDetectRenderer(rep.width, rep.height);
                             document.body.appendChild(renderer.view);
                             const stage = new PIXI.Container();
-                            
-                            //drawing procedural texture and use it as a PIXI sprite	
+
+                            let sprite = new PIXI.Sprite(PIXI.Texture.fromBuffer(rep.board, rep.width, rep.height));
+
+                            /*//drawing procedural texture and use it as a PIXI sprite	
                             let sprite = new PIXI.Sprite(PIXI.Texture.Draw(function (canvas) {
                                 //we are now in a 2D context		
                                 //you need to specify your canvas width and height otherwise it'll have a size of 0x0 and you'll get an empty sprite		
@@ -55,7 +57,7 @@
                                     }
                                 }
                                 ctx.putImageData(pix, 0, 0);
-                            }));
+                            }));*/
 
                             stage.addChild(sprite);
                             renderer.render(stage);
