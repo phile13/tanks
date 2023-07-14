@@ -16,9 +16,9 @@ class GameSpace {
         for (let x = 0; x < length; x++) {
             wall.push(GameSpace.WALL);
         }
-        GameSpace.board[y].push(wall);
+        GameSpace.board[0].push(wall);
 
-        for (let y = 1; y < depth-1; y++) {
+        for (let y = 1; y < depth; y++) {
             let row = [GameSpace.WALL];
             for (let x = 0; x < length; x++) {
                 row.push(GameSpace.GRASS);
@@ -27,7 +27,7 @@ class GameSpace {
             GameSpace.board[y].push(row);
         }
 
-        GameSpace.board[y].push(wall);
+        GameSpace.board[depth+1].push(wall);
     }
 
     static BoardToString() {
