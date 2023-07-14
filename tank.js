@@ -120,11 +120,11 @@ class Tank {
 				}
 			}
 			else {
-				client.send("action[" + req.action + "]: unknown");
+				this.socket.send("action[" + req.action + "]: unknown");
 			}
 		}
 		else {
-			client.send("json not correct" + JSON.stringify(msg));
+			this.socket.send("json not correct" + JSON.stringify(msg));
 		}
 	}
 
