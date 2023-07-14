@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>tank game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.4/pixi.min.js" integrity="sha512-Ch/O6kL8BqUwAfCF7Ie5SX1Hin+BJgYH4pNjRqXdTEqMsis1TUYg+j6nnI9uduPjGaj7DN4UKCZgpvoExt6dkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+    <body>
+        <script>
+            import * as PIXI from 'pixi.js';
+            const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+            document.body.appendChild(app.view);
+
+            let myid = null;
+            const ws = new WebSocket("ws://74.208.107.245:32123");
+
+            ws.addEventListener("open", () => {
+                ws.send('{"id":0,"action":"NEW"}');
+            });
+
+            ws.addEventListener("message", (event) => {
+                let rep = null;
+                try {
+                    rep = JSON.parse(event.data);
+                } catch (e) {
+                    console.log("invalid reply");
+                    return;
+                }
+
+                if ("type" in rep) {
+                    switch (rep.type) {
+                        case "new":
+                            myid = rep.id;
+                            let board = rep.board;
+                            const app = new PIXI.Application({ background: '#1099bb', width: rep.width, height: rep.height });
+                            document.body.appendChild(app.view);
+
+                            //drawing procedural texture and use it as a PIXI sprite	
+                            let sprite = new PIXI.Sprite(PIXI.Texture.Draw(function (canvas) {
+                                //we are now in a 2D context		
+                                //you need to specify your canvas width and height otherwise it'll have a size of 0x0 and you'll get an empty sprite		
+                                canvas.width = rep.width;
+                                canvas.height = rep.height;
+                                let ctx = canvas.getContext('2d');
+                                //get  canvas 2D context				
+                                ctx.fillStyle = "black";
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                let inc = 0;
+                                let pix = ctx.createImageData(canvas.width, canvas.height);
+                                for (let y = 0; y < canvas.height; y++) {
+                                    for (let x = 0; x < canvas.width; x++) {
+                                        let colorRGBA = getColor(x, y);
+                                        pix.data[inc++] = colorRGBA.r;
+                                        pix.data[inc++] = colorRGBA.g;
+                                        pix.data[inc++] = colorRGBA.b;
+                                        pix.data[inc++] = colorRGBA.a;
+                                    }
+                                }
+                                ctx.putImageData(pix, 0, 0);
+                            }));
+                            app.stage.addChild(sprite);
+
+                            break;
+                        case "state":
+                            break;
+                        case "update":
+                            break;
+                        default: break;
+                    }
+                }
+            });
+
+
+            
+        </script>
+    </body>
+</html>
+
