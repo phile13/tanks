@@ -36,9 +36,10 @@ class Tank {
 		this.Zy = 0;
 
 		this.client = client;
-		this.client.on("message", this.HandleMessages);
+		this.client.on("message", () => {
+			this.HandleMessages();
+		});
 		this.client.on("close", () => {
-			console.log("closed");
 			delete Tank.tanks[this.id];
 		});
 	}
