@@ -15,7 +15,6 @@ class Tank {
 		});
     }
 
-
 	constructor(socket) {
 		this.#id = Tank.GetNextId();
 		Tank.tanks[this.#id] = this;
