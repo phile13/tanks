@@ -50,7 +50,7 @@
                                 let texture = renderer.generateTexture(gr);
                                 tanks[rep.id] = new PIXI.Sprite(texture);  
                                 stage.addChild(tanks[rep.id]);
-                                //renderer.render(stage);
+                                renderer.render(stage);
                             }
                             tanks[rep.id].x = rep.x;
                             tanks[rep.id].y = rep.y;
