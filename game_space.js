@@ -43,7 +43,7 @@ class GameSpace {
         stop_y = (stop_y < 0) ? 0 : (stop_y > GameSpace.height) ? GameSpace.height : stop_y;
         let start_x = Math.floor(x - radius);
         start_x = (start_x < 0) ? 0 : (start_x > GameSpace.width) ? GameSpace.width : start_x;
-        let stop_x = Math.ceil(y + radius);
+        let stop_x = Math.ceil(x + radius);
         stop_x = (stop_x < 0) ? 0 : (stop_x > GameSpace.width) ? GameSpace.width : stop_x;
 
         for (let Y = start_y; Y < stop_y; Y++) {
