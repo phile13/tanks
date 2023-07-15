@@ -80,7 +80,6 @@ class Tank {
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.id in Tank.tanks) {
-				console.log("action:" + req.action);
 				let change_requested = true;
 				let x = this.x;
 				let y = this.y;
@@ -121,8 +120,8 @@ class Tank {
 				}
 
 				if (change_requested) {
-					let Zx = this.x / Tank.SIZE;
-					let Zy = this.y / Tank.SIZE;
+					let Zx = x / Tank.SIZE;
+					let Zy = y / Tank.SIZE;
 					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy)) {
 						this.Hx = x - this.x;
 						this.Hy = y - this.y;
@@ -147,6 +146,7 @@ class Tank {
 		Object.values(Tank.tanks).forEach(tank => {
 			if (id != tank.id) {
 				if (Math.abs(Zx - tank.Zx) < 1 || Math.abs(Zy - tank.Zy) < 1) {
+					console.log("tank move not ok");
 					return false;
 				}
 			}
