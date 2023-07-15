@@ -1,7 +1,7 @@
 class GameSpace {
     static board = [];
-    static width = 512;
-    static height = 512;
+    static width = 800;
+    static height = 600;
     static pieces = [];
 
     static GRASS = 50;

@@ -46,7 +46,7 @@ class Tank {
 
 
 	HandleMessages(msg) {
-		console.log("msg:" + msg);
+		//console.log("msg:" + msg);
 		let req = null;
 		try {
 			req = JSON.parse(msg);
@@ -65,9 +65,6 @@ class Tank {
 					y = Tank.RADIUS + 1 + Math.floor(Math.random() * (GameSpace.height - Tank.SIZE - 2));
 					Zx = x / Tank.SIZE;
 					Zy = y / Tank.SIZE;
-					console.log("x:" + x + " y:" + y);
-					console.log(GameSpace.MoveIsOkay(Tank.RADIUS, x, y));
-					console.log(Tank.MoveIsOkay(this.id, Zx, Zy));
 				} while (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) == false || Tank.MoveIsOkay(this.id, Zx, Zy) == false);
 				this.x = x;
 				this.y = y;
