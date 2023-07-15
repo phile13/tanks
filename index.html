@@ -38,7 +38,7 @@
                             stage = new PIXI.Container();
                             renderer.render(stage);
 
-                            ws.send('{"id":'+myid+',"action":"N"}')
+                            ws.send('{"id":' + myid + ',"action":"C"}');
                             break;
                         case "tank":
                             if (!(rep.id in tanks)) {
@@ -63,6 +63,61 @@
                 }
             });
 
+
+            document.addEventListener("keydown", (event) => {
+                let action = "";
+                switch (event.keyCode) {
+                    case 36:
+                    case 103:
+                        action = "NW";
+                        break;
+                    case 38:
+                    case 104:
+                        action = "N";
+                        break;
+                    case 33:
+                    case 105:
+                        action = "NE";
+                        break;
+                    case 39:
+                    case 102:
+                        action = "E";
+                        break;
+                    case 34:
+                    case 99:
+                        action = "SE";
+                        break;
+                    case 40:
+                    case 98:
+                        action = "S";
+                        break;
+                    case 35:
+                    case 97:
+                        action = "SW";
+                        break;
+                    case 37:
+                    case 100:
+                        action = "W";
+                        break;
+                    case 12:
+                    case 101:
+                        action = "C";
+                        break;
+                    case 65:
+                        action = "L";
+                        break;
+                    case 68:
+                        action = "R";
+                        break;
+                    default:
+                        action = "";
+                        break;
+                }
+
+                if (action != "") {
+                    ws.send('{"id":' + myid + ',"action":"' + action + '"}');
+                }
+            }, false);
 
             
         </script>

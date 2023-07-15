@@ -113,6 +113,8 @@ class Tank {
 						x++;
 						y--;
 						break;
+					case "C":
+						break;
 					default:
 						change_requested = false;
 						break;
