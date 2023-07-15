@@ -49,12 +49,10 @@ class GameSpace {
         for (let Y = start_y; Y < stop_y; Y++) {
             for (let X = start_x; X < stop_x; X++) {
                 if (GameSpace.board[Y][X] == GameSpace.WALL) {
-                    console.log("gamespace move not ok");
                     return false;
                 }
             }
         }
-        console.log("gamespace move ok");
         return true;
     }
 }
