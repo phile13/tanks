@@ -43,9 +43,9 @@
                         case "tank":
                             if (!(rep.id in tanks)) {
                                 let gr = new PIXI.Graphics();
+                                gr.lineStyle(2, 0x993333);
                                 gr.beginFill(0xFFFFFF);
-                                gr.lineStyle(0);
-                                gr.drawCircle(30, 30, 30);
+                                gr.drawCircle(0, 0, 10);
                                 gr.endFill();
                                 let texture = renderer.generateTexture(gr);
                                 tanks[rep.id] = new PIXI.Sprite(texture);  
