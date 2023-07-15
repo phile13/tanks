@@ -1,6 +1,6 @@
 const Tank = require("./tank.js");
 const GameSpace = require("./game_space.js");
-GameSpace.Create(512, 512);
+GameSpace.Create(800, 600);
 
 const WebSocket = require('ws');
 let server = new WebSocket.Server({port: 32123});
