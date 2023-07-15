@@ -56,7 +56,6 @@ class Tank {
 
 		if ("id" in req && "action" in req) {
 			if (req.action == "NEW") {
-				console.log("new");
 				let x = 0;
 				let y = 0;
 				let Zx = 0;
@@ -123,6 +122,7 @@ class Tank {
 					let Zx = x / Tank.SIZE;
 					let Zy = y / Tank.SIZE;
 					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy)) {
+						console.log("moving");
 						this.Hx = x - this.x;
 						this.Hy = y - this.y;
 						this.x = x;
