@@ -5,12 +5,10 @@
 </head>
     <body>
         <script>
-            //const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
-            //document.body.appendChild(app.view);
+            const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+            document.body.appendChild(app.view);
 
             let myid = null;
-            let renderer = null;
-            let stage = null;
             let board = null;
             let tanks = {};
             const ws = new WebSocket("ws://74.208.107.245:32123");
@@ -32,25 +30,16 @@
                     switch (rep.type) {
                         case "new":
                             myid = rep.id;
-                            board = rep.board;
-                            renderer = PIXI.autoDetectRenderer(rep.width, rep.height);
-                            document.body.appendChild(renderer.view);
-                            stage = new PIXI.Container();
-                            renderer.render(stage);
-
                             ws.send('{"id":' + myid + ',"action":"C"}');
                             break;
                         case "tank":
                             if (!(rep.id in tanks)) {
-                                let gr = new PIXI.Graphics();
-                                gr.lineStyle(2, 0x993333);
-                                gr.beginFill(0xFFFFFF);
-                                gr.drawCircle(rep.x, rep.y, 11);
-                                gr.endFill();
-                                let texture = renderer.generateTexture(gr);
-                                tanks[rep.id] = new PIXI.Sprite(texture);  
-                                stage.addChild(tanks[rep.id]);
-                                renderer.render(stage);
+                                tanks[rep.id] = PIXI.Sprite.from((rep.id == myid) ? 'mytank.png' : 'tank.png');  
+                                tanks[rep.id].anchor.set(0.5);
+                                tanks[rep.id].x = rep.x;
+                                tanks[rep.id].y = rep.y;
+
+                                app.stage.addChild(tanks[rep.id]);
                             }
                             tanks[rep.id].x = rep.x;
                             tanks[rep.id].y = rep.y;
