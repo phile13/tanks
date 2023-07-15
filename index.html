@@ -4,8 +4,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.4/pixi.min.js" integrity="sha512-Ch/O6kL8BqUwAfCF7Ie5SX1Hin+BJgYH4pNjRqXdTEqMsis1TUYg+j6nnI9uduPjGaj7DN4UKCZgpvoExt6dkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
     <body>
+        <table style="width:524px;height:524px;">
+            <tr><td><canvas id="board"></canvas></td></tr>
+        </table>
+
         <script>
-            const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+            const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
             document.body.appendChild(app.view);
 
             let myid = null;
@@ -43,6 +47,7 @@
                             }
                             tanks[rep.id].x = rep.x;
                             tanks[rep.id].y = rep.y;
+                            tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
 
                             break;
                         case "update":
