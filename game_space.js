@@ -54,6 +54,7 @@ class GameSpace {
                 }
             }
         }
+        console.log("gamespace move ok");
         return true;
     }
 }

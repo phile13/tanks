@@ -121,6 +121,7 @@ class Tank {
 				if (change_requested) {
 					let Zx = x / Tank.SIZE;
 					let Zy = y / Tank.SIZE;
+					console.log("change requested");
 					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy)) {
 						console.log("moving");
 						this.Hx = x - this.x;
@@ -151,6 +152,7 @@ class Tank {
 				}
 			}
 		});
+		console.log("tank move ok");
 		return true;
 	}
 
