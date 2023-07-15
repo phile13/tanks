@@ -5,8 +5,8 @@
 </head>
     <body>
         <script>
-            const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
-            document.body.appendChild(app.view);
+            //const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+            //document.body.appendChild(app.view);
 
             let myid = null;
             let renderer = null;
@@ -38,7 +38,7 @@
                             stage = new PIXI.Container();
                             renderer.render(stage);
 
-                            ws.send('{"id":'+myid+',"action":"NW"}')
+                            ws.send('{"id":'+myid+',"action":"N"}')
                             break;
                         case "tank":
                             if (!(rep.id in tanks)) {
