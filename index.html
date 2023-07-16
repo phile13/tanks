@@ -10,153 +10,148 @@
 
         <script>
             window.onload = function () {
-                let ctx = document.getElementById("board").getContext("2d");
-                let h = ctx.canvas.height;
-                let w = ctx.canvas.width;
-            }
+                const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
+                document.body.appendChild(app.view);
 
-            const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
-            document.body.appendChild(app.view);
-
-            let ctx = Controller.getContext();
-            app.load((loader, resources) => {
-                ctx = Controller.getContext();
-            })
+                let ctx = Controller.getContext();;
+                app.load((loader, resources) => {
+                    ctx = Controller.getContext();
+                })
 
 
-            let myid = null;
-            let board = null;
-            let tanks = {};
-            const ws = new WebSocket("ws://74.208.107.245:32123");
+                let myid = null;
+                let board = null;
+                let tanks = {};
+                const ws = new WebSocket("ws://74.208.107.245:32123");
 
-            ws.addEventListener("open", () => {
-                ws.send('{"id":0,"action":"NEW"}');
-            });
+                ws.addEventListener("open", () => {
+                    ws.send('{"id":0,"action":"NEW"}');
+                });
 
-            ws.addEventListener("message", (event) => {
-                let rep = null;
-                try {
-                    rep = JSON.parse(event.data);
-                } catch (e) {
-                    console.log("invalid reply");
-                    return;
-                }
+                ws.addEventListener("message", (event) => {
+                    let rep = null;
+                    try {
+                        rep = JSON.parse(event.data);
+                    } catch (e) {
+                        console.log("invalid reply");
+                        return;
+                    }
 
-                if ("type" in rep) {
-                    switch (rep.type) {
-                        case "new":
-                            myid = rep.id;
-                            ws.send('{"id":' + myid + ',"action":"C"}');
-                            break;
-                        case "tank":
-                            if (!(rep.id in tanks)) {
-                                tanks[rep.id] = PIXI.Sprite.from((rep.id == myid) ? 'mytank.png' : 'tank.png');  
-                                tanks[rep.id].anchor.set(0.5);
+                    if ("type" in rep) {
+                        switch (rep.type) {
+                            case "new":
+                                myid = rep.id;
+                                ws.send('{"id":' + myid + ',"action":"C"}');
+                                break;
+                            case "tank":
+                                if (!(rep.id in tanks)) {
+                                    tanks[rep.id] = PIXI.Sprite.from((rep.id == myid) ? 'mytank.png' : 'tank.png');
+                                    tanks[rep.id].anchor.set(0.5);
+                                    tanks[rep.id].x = rep.x;
+                                    tanks[rep.id].y = rep.y;
+
+                                    app.stage.addChild(tanks[rep.id]);
+                                }
                                 tanks[rep.id].x = rep.x;
                                 tanks[rep.id].y = rep.y;
+                                tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
 
-                                app.stage.addChild(tanks[rep.id]);
-                            }
-                            tanks[rep.id].x = rep.x;
-                            tanks[rep.id].y = rep.y;
-                            tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
-
-                            break;
-                        case "update":
-                            break;
-                        default: break;
-                    }
-                }
-
-                if ("board" in rep) {
-                    let color_map = {
-                        90: [200, 200, 200], 80: [150, 150, 150], 70: [100, 150, 100], 60: [50, 200, 50], 50: [50, 200, 50],
-                        99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
-                    }
-                    
-
-                    let ctx = document.getElementById("board").getContext("2d");
-                    let height = rep.board.length;
-                    let width = rep.board[0].length;
-
-                    let h = ctx.canvas.height;
-                    let w = ctx.canvas.width;
-
-                    let imgData = ctx.getImageData(0, 0, w, h);
-                    let data = imgData.data;  // the array of RGBA values
-                    for (let i = 0; i < height; i++) {
-                        for (let j = 0; j < width; j++) {
-                            let s = 4 * i * w + 4 * j;  // calculate the index in the array
-                            let x = color_map[rep.board[i][j]];  // the RGB values
-                            data[s] = x[0];
-                            data[s + 1] = x[1];
-                            data[s + 2] = x[2];
-                            data[s + 3] = 255;  // fully opaque
+                                break;
+                            case "update":
+                                break;
+                            default: break;
                         }
                     }
-                    ctx.putImageData(imgData, 0, 0);
-                }
-            });
+
+                    if ("board" in rep) {
+                        let color_map = {
+                            90: [200, 200, 200], 80: [150, 150, 150], 70: [100, 150, 100], 60: [50, 200, 50], 50: [50, 200, 50],
+                            99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
+                        }
 
 
-            document.addEventListener("keydown", (event) => {
-                let action = "";
-                switch (event.keyCode) {
-                    case 36:
-                    case 103:
-                        action = "NW";
-                        break;
-                    case 38:
-                    case 104:
-                        action = "N";
-                        break;
-                    case 33:
-                    case 105:
-                        action = "NE";
-                        break;
-                    case 39:
-                    case 102:
-                        action = "E";
-                        break;
-                    case 34:
-                    case 99:
-                        action = "SE";
-                        break;
-                    case 40:
-                    case 98:
-                        action = "S";
-                        break;
-                    case 35:
-                    case 97:
-                        action = "SW";
-                        break;
-                    case 37:
-                    case 100:
-                        action = "W";
-                        break;
-                    case 12:
-                    case 101:
-                        action = "C";
-                        break;
-                    case 65:
-                        action = "L";
-                        break;
-                    case 68:
-                        action = "R";
-                        break;
-                    case 32:
-                        action = "FIRE";
-                        break;
-                    default:
-                        action = "";
-                        break;
-                }
+                        let ctx = document.getElementById("board").getContext("2d");
+                        let height = rep.board.length;
+                        let width = rep.board[0].length;
 
-                if (action != "") {
-                    ws.send('{"id":' + myid + ',"action":"' + action + '"}');
-                }
-            }, false);
+                        let h = ctx.canvas.height;
+                        let w = ctx.canvas.width;
 
+                        let imgData = ctx.getImageData(0, 0, w, h);
+                        let data = imgData.data;  // the array of RGBA values
+                        for (let i = 0; i < height; i++) {
+                            for (let j = 0; j < width; j++) {
+                                let s = 4 * i * w + 4 * j;  // calculate the index in the array
+                                let x = color_map[rep.board[i][j]];  // the RGB values
+                                data[s] = x[0];
+                                data[s + 1] = x[1];
+                                data[s + 2] = x[2];
+                                data[s + 3] = 255;  // fully opaque
+                            }
+                        }
+                        ctx.putImageData(imgData, 0, 0);
+                    }
+                });
+
+
+                document.addEventListener("keydown", (event) => {
+                    let action = "";
+                    switch (event.keyCode) {
+                        case 36:
+                        case 103:
+                            action = "NW";
+                            break;
+                        case 38:
+                        case 104:
+                            action = "N";
+                            break;
+                        case 33:
+                        case 105:
+                            action = "NE";
+                            break;
+                        case 39:
+                        case 102:
+                            action = "E";
+                            break;
+                        case 34:
+                        case 99:
+                            action = "SE";
+                            break;
+                        case 40:
+                        case 98:
+                            action = "S";
+                            break;
+                        case 35:
+                        case 97:
+                            action = "SW";
+                            break;
+                        case 37:
+                        case 100:
+                            action = "W";
+                            break;
+                        case 12:
+                        case 101:
+                            action = "C";
+                            break;
+                        case 65:
+                            action = "L";
+                            break;
+                        case 68:
+                            action = "R";
+                            break;
+                        case 32:
+                            action = "FIRE";
+                            break;
+                        default:
+                            action = "";
+                            break;
+                    }
+
+                    if (action != "") {
+                        ws.send('{"id":' + myid + ',"action":"' + action + '"}');
+                    }
+                }, false);
+            }
             
         </script>
     </body>
