@@ -75,6 +75,9 @@ class Tank {
 				this.client.send(rep_msg);
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
+			else if (req.action == "FIRE") {
+
+            }
 			else if (req.id in Tank.tanks) {
 				let change_requested = true;
 				let x = this.x;
