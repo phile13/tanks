@@ -11,23 +11,24 @@
         <script>
             let background = null;
             function UpdateBackground(app, board) {
+                let first_time = (background == null);
+
                 let color_map = {
                     90: [200, 200, 200], 80: [150, 150, 150], 70: [100, 150, 100], 60: [50, 200, 50], 50: [50, 200, 50],
                     99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
                 }
 
-                let g = new PIXI.Graphics();
+                let background = new PIXI.Graphics();
                 for (let row = 0; row < 600; row++) {
                     for (let col = 0; col < 800; col++) {
-                        g.beginFill(color_map[board[row][col]]);
-                        g.drawRect(col, row, 1, 1);
-                        g.endFill();
+                        background.beginFill(color_map[board[row][col]]);
+                        background.drawRect(col, row, 1, 1);
+                        background.endFill();
                     }
+                }
 
-                    if (background == null) {
-                        background = new PIXI.Sprite(PIXI.Texture.from(g));
-                        app.stage.addChild(background);
-                    }
+                if (first_time) {
+                    app.stage.addChild(background);
                 }
             }
 
