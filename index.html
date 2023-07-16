@@ -11,6 +11,9 @@
         <script>
             let background = null;
             function UpdateBackground(app, board) {
+                let num_rows = board.length;
+                let num_cols = board[0].length;
+
                 let first_time = (background == null);
 
                 let color_map = {
@@ -19,8 +22,8 @@
                 };
 
                 background = (first_time) ? new PIXI.Graphics() : background;
-                for (let row = 0; row < 600; row++) {
-                    for (let col = 0; col < 800; col++) {
+                for (let row = 0; row < num_rows; row++) {
+                    for (let col = 0; col < num_cols; col++) {
                         background.beginFill(color_map[board[row][col]]);
                         background.drawRect(col, row, 1, 1);
                         background.endFill();
