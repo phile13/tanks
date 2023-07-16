@@ -9,6 +9,48 @@
         </table>
 
         <script>
+            let background = null;
+            let ctx = null;
+            function UpdateBackground(app, board) {
+                if (background == null) {
+                    background = new PIXI.Sprite(PIXI.Texture.Draw((canvas) => {
+                        ctx = canvas.getContext("2d");
+                        UpdateContext(board);
+                    }));
+                    app.stage.addChild(background);
+                }
+                else {
+                    UpdateContext(board);
+                }
+            }
+
+            function UpdateContext(board) {
+                let color_map = {
+                    90: [200, 200, 200], 80: [150, 150, 150], 70: [100, 150, 100], 60: [50, 200, 50], 50: [50, 200, 50],
+                    99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
+                }
+                let height = board.length;
+                let width = board[0].length;
+
+                let h = ctx.canvas.height;
+                let w = ctx.canvas.width;
+
+                let imgData = ctx.getImageData(0, 0, w, h);
+                let data = imgData.data;  // the array of RGBA values
+                for (let i = 0; i < height; i++) {
+                    for (let j = 0; j < width; j++) {
+                        let s = 4 * i * w + 4 * j;  // calculate the index in the array
+                        let x = color_map[board[i][j]];  // the RGB values
+                        data[s] = x[0];
+                        data[s + 1] = x[1];
+                        data[s + 2] = x[2];
+                        data[s + 3] = 255;  // fully opaque
+                    }
+                }
+                ctx.putImageData(imgData, 0, 0);
+            }
+
+
             window.onload = function () {
                 const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
                 document.body.appendChild(app.view);
@@ -29,6 +71,10 @@
                     } catch (e) {
                         console.log("invalid reply");
                         return;
+                    }
+
+                    if ("board" in rep) {
+                        UpdateBackground(rep.board);
                     }
 
                     if ("type" in rep) {
@@ -55,35 +101,6 @@
                                 break;
                             default: break;
                         }
-                    }
-
-                    if ("board" in rep) {
-                        let color_map = {
-                            90: [200, 200, 200], 80: [150, 150, 150], 70: [100, 150, 100], 60: [50, 200, 50], 50: [50, 200, 50],
-                            99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
-                        }
-
-
-                        let ctx = document.getElementById("board").getContext("2d");
-                        let height = rep.board.length;
-                        let width = rep.board[0].length;
-
-                        let h = ctx.canvas.height;
-                        let w = ctx.canvas.width;
-
-                        let imgData = ctx.getImageData(0, 0, w, h);
-                        let data = imgData.data;  // the array of RGBA values
-                        for (let i = 0; i < height; i++) {
-                            for (let j = 0; j < width; j++) {
-                                let s = 4 * i * w + 4 * j;  // calculate the index in the array
-                                let x = color_map[rep.board[i][j]];  // the RGB values
-                                data[s] = x[0];
-                                data[s + 1] = x[1];
-                                data[s + 2] = x[2];
-                                data[s + 3] = 255;  // fully opaque
-                            }
-                        }
-                        ctx.putImageData(imgData, 0, 0);
                     }
                 });
 
