@@ -10,10 +10,10 @@ class GameSpace {
     static Create(width, height) {
         GameSpace.width = width;
         GameSpace.height = height;
-
+        console.log("make empty board");
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
 
-
+        console.log("made empty board");
         let num_x_tiles = width / 40;
         let num_y_tiles = height / 40;
 
@@ -42,6 +42,7 @@ class GameSpace {
                 }
             }
         }
+        console.log("filled board");
 
         let x1 = width - 1;
         let x2 = width - 2;
@@ -61,6 +62,7 @@ class GameSpace {
             GameSpace.board[y2][x] = 99;
             GameSpace.board[y1][x] = 99;
         }
+        console.log("walled board");
     }
 
     static BoardToString() {
