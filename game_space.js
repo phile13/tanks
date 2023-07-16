@@ -11,25 +11,56 @@ class GameSpace {
         GameSpace.width = width;
         GameSpace.height = height;
 
-        
-        let wall = [];
-        for (let x = 0; x < width; x++) {
-            wall.push(GameSpace.WALL);
-        }
-        GameSpace.board.push(wall);
+        GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
 
-        width -= 2;
-        height -= 2;
-        for (let y = 1; y < height; y++) {
-            let row = [GameSpace.WALL];
-            for (let x = 0; x < width; x++) {
-                row.push(GameSpace.GRASS);
+
+        let num_x_tiles = width / 40;
+        let num_y_tiles = height / 40;
+
+        let elevation_change_map = [-2, -1, -1, 0, 0, 0, 0, -1, -1, -2];
+        let elevation = Math.floor(10 * Math.random);
+        let biome = Math.floor(10 * Math.random());
+
+        for (let y_tile = 0; y_tile < num_y_tiles; y_tile++) {
+
+            let start_y = y_tile * 40;
+            let stop_y = (y_tile + 1) * 40;
+            for (let x_tile = 0; x_tile < num_x_tiles; x_tile++) {
+                let new_elevation = elevation + elevation_change_map[Math.floor(10 * Math.random)];
+                elevation = (new_elevation >= 0 || new_elevation < 10) ? new_elevation : elevation;
+                if (y_tile % 10 == 0 && x_tile % 10 == 0) {
+                    biome = 1 + Math.floor(2 * Math.random());
+                }
+                let value = (elevation < 4) ? elevation * 10 : elevation * 10 + biome;
+
+                let start_x = x_tile * 40;
+                let stop_x = (x_tile + 1) * 40;
+                for (let y = start_y; y < stop_y; y++) {
+                    for (let x = start_x; x < stop_x; x++) {
+                        GameSpace.board[y][x] = value;
+                    }
+                }
             }
-            row.push(GameSpace.WALL);
-            GameSpace.board.push(row);
         }
 
-        GameSpace.board.push(wall);
+        let x1 = width - 1;
+        let x2 = width - 2;
+        for (let y = 0; y < height; y++) {
+            GameSpace.board[y][0] = 99;
+            GameSpace.board[y][1] = 99;
+            GameSpace.board[y][x2] = 99;
+            GameSpace.board[y][x1] = 99;
+        }
+
+
+        let y1 = height - 1;
+        let y2 = height - 2;
+        for (let x = 0; x < width; x++) {
+            GameSpace.board[0][x] = 99;
+            GameSpace.board[1][x] = 99;
+            GameSpace.board[y2][x] = 99;
+            GameSpace.board[y1][x] = 99;
+        }
     }
 
     static BoardToString() {
