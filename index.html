@@ -18,7 +18,7 @@
             const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
             document.body.appendChild(app.view);
 
-            let ctx = null;
+            let ctx = Controller.getContext();
             app.load((loader, resources) => {
                 ctx = Controller.getContext();
             })
