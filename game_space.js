@@ -31,9 +31,9 @@ class GameSpace {
                 if (y_tile % 10 == 0 && x_tile % 10 == 0) {
                     biome = 1 + Math.floor(2 * Math.random());
                 }
-                console.log(y_tile + "," + x_tile + ":" + value);
+                
                 let value = elevation * 10 + ((elevation < 4) ? 0 : biome);
-
+                console.log(y_tile + "," + x_tile + ":" + value);
                 let start_x = x_tile * 40;
                 let stop_x = (x_tile + 1) * 40;
                 for (let y = start_y; y < stop_y; y++) {
