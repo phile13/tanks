@@ -18,7 +18,7 @@
                     99: [0, 0, 0], 89: [50, 50, 50], 79: [100, 100, 100], 69: [150, 150, 150], 59: [50, 200, 50]
                 }
 
-                let background = new PIXI.Graphics();
+                background = (first_time) ? new PIXI.Graphics() : background;
                 for (let row = 0; row < 600; row++) {
                     for (let col = 0; col < 800; col++) {
                         background.beginFill(color_map[board[row][col]]);
