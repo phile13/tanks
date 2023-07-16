@@ -18,6 +18,12 @@
             const app = new PIXI.Application({ background: '#1099bb', view: document.getElementById("board") });
             document.body.appendChild(app.view);
 
+            let ctx = null;
+            app.load((loader, resources) => {
+                ctx = Controller.getContext();
+            })
+
+
             let myid = null;
             let board = null;
             let tanks = {};
