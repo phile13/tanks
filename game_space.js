@@ -17,7 +17,7 @@ class GameSpace {
         let num_x_tiles = width / 40;
         let num_y_tiles = height / 40;
 
-        let elevation_change_map = [-2, -1, -1, 0, 0, 0, 0, -1, -1, -2];
+        let elevation_change_map = [-2, -1, -1, 0, 0, 0, 0, 1, 1, 2];
         let elevation = Math.floor(10 * Math.random());
         let biome = Math.floor(10 * Math.random());
 
