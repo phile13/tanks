@@ -20,6 +20,7 @@ class GameSpace {
         let elevation_change_map = [-2, -1, -1, 0, 0, 0, 0, 1, 1, 2];
         let elevation = Math.floor(10 * Math.random());
         let biome = Math.floor(10 * Math.random());
+        let values = {};
 
         for (let y_tile = 0; y_tile < num_y_tiles; y_tile++) {
 
@@ -31,11 +32,13 @@ class GameSpace {
                 if (y_tile % 10 == 0 && x_tile % 10 == 0) {
                     biome = 1 + Math.floor(2 * Math.random());
                 }
-                
+
                 let value = elevation * 10 + ((elevation < 4) ? 0 : biome);
-                if (y_tile < 1) {
-                    console.log(y_tile + "," + x_tile + ":" + elevation + ":" + biome + ":" + value + ":" + new_elevation);
+                if (!(value in values)) {
+                    values[value] = 1;
+                    console.log(value);
                 }
+
                 let start_x = x_tile * 40;
                 let stop_x = (x_tile + 1) * 40;
                 for (let y = start_y; y < stop_y; y++) {
