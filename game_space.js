@@ -33,7 +33,7 @@ class GameSpace {
                 }
                 
                 let value = elevation * 10 + ((elevation < 4) ? 0 : biome);
-                if (y_tile < 2) {
+                if (y_tile < 1) {
                     console.log(y_tile + "," + x_tile + ":" + elevation + ":" + biome + ":" + value);
                 }
                 let start_x = x_tile * 40;
