@@ -17,8 +17,16 @@
                 let first_time = (background == null);
 
                 let color_map = {
-                    50: 0x00ff00,
-                    99: 0x111111
+                    00: 0x000088,
+                    10: 0x2222aa,
+                    20: 0x8888cc,
+                    30: 0xaaaaff,
+                    41: 0x008800, 42: 0x884400,
+                    51: 0x22aa22, 52: 0xaa6622,
+                    61: 0x88cc88, 62: 0xccaa88,
+                    71: 0xaaffaa, 72: 0xffccaa,
+                    81: 0xccffdd, 82: 0xffddcc,
+                    91: 0xeeffef, 92: 0xffefee, 99: 0x010101
                 };
 
                 background = (first_time) ? new PIXI.Graphics() : background;
