@@ -157,7 +157,7 @@ class Tank {
 	}
 
 	UpdateMessage() {
-		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank"}';
+		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank","z":'+GameSpace.board[this.y][this.x]+'}';
     }
 }
 

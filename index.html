@@ -77,18 +77,23 @@
                                 ws.send('{"id":' + myid + ',"action":"C"}');
                                 break;
                             case "tank":
+                                let scale = (rep.z + 1) / 10;
                                 if (!(rep.id in tanks)) {
                                     tanks[rep.id] = PIXI.Sprite.from((rep.id == myid) ? 'mytank.png' : 'tank.png');
                                     tanks[rep.id].anchor.set(0.5);
                                     tanks[rep.id].x = rep.x;
                                     tanks[rep.id].y = rep.y;
+                                    tanks[rep.id].scale(scale, scale);
 
                                     app.stage.addChild(tanks[rep.id]);
                                 }
-                                tanks[rep.id].x = rep.x;
-                                tanks[rep.id].y = rep.y;
-                                tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
-
+                                else {
+                                    tanks[rep.id].x = rep.x;
+                                    tanks[rep.id].y = rep.y;
+                                    tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
+                                    tanks[rep.id].scale(scale, scale);
+                                }
+                               
                                 break;
                             case "update":
                                 break;
