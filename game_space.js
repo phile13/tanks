@@ -5,7 +5,7 @@ class GameSpace {
     static pieces = [];
 
     static WATERLINE = 50;
-    static WALL = 99;
+    static WALL = 0;
 
     static PeakHeight(A, x0, y0, sx2, sy2, x, y) {
         return (A * Math.exp(-((Math.pow(x - x0, 2) / (sx2)) + (Math.pow(y - y0, 2) / (sy2)))));
