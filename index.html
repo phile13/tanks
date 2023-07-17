@@ -40,10 +40,10 @@
 
                 if (first_time) {
                     app.stage.addChild(background);
-                    target = PIXI.Sprite.from('target.png');
-                    //target.alpha = 0;
-                    app.stage.addChild(target);
+                    return true;
                 }
+                return false;
+                
             }
 
 
@@ -74,7 +74,11 @@
 
                     if ("board" in rep) {
                         board = rep.board;
-                        UpdateBackground(app, rep.board);
+                        if (UpdateBackground(app, rep.board)) {
+                            target = PIXI.Sprite.from('target.png');
+                            target.alpha = 0;
+                            app.stage.addChild(target);
+                        }
                     }
 
                     if ("type" in rep) {
@@ -93,14 +97,14 @@
                                     tanks[rep.id].scale.set(scale, scale);
 
                                     app.stage.addChild(tanks[rep.id]);
-                                    //target.alpha = 0;
+                                    target.alpha = 0;
                                 }
                                 else {
                                     tanks[rep.id].x = rep.x;
                                     tanks[rep.id].y = rep.y;
                                     tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
                                     tanks[rep.id].scale.set(scale, scale);
-                                    //target.alpha = 0;
+                                    target.alpha = 0;
                                 }
 
                                 console.log("moving");
@@ -121,7 +125,7 @@
                                             X += increment;
                                             z = z0 + X - .0032 * X * X;
                                         } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
-                                        //target.alpha = 1;
+                                        target.alpha = 1;
                                         target.x = x;
                                         target.y = y;
                                     }
