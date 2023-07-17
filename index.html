@@ -123,7 +123,7 @@
                                             x += rep.Hx;
                                             y += rep.Hy;
                                             X += increment;
-                                            z = z0 + X - .0032 * X * X;
+                                            z = z0 + 1.5 * X - .005 * X * X;
                                         } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
                                         target.alpha = 1;
                                         target.x = x;
