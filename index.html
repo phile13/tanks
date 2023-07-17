@@ -40,6 +40,9 @@
 
                 if (first_time) {
                     app.stage.addChild(background);
+                    target = PIXI.Sprite.from('target.png');
+                    target.alpha = 0;
+                    app.stage.addChild(target);
                 }
             }
 
@@ -52,9 +55,7 @@
                 let board = null;
                 let tanks = {};
                 let targeting_timer = null;
-                let target = PIXI.Sprite.from('target.png');
-                //target.alpha = 0;
-                app.stage.addChild(target);
+                let target = null;
 
                 const ws = new WebSocket("ws://74.208.107.245:32123");
 
@@ -92,18 +93,20 @@
                                     tanks[rep.id].scale.set(scale, scale);
 
                                     app.stage.addChild(tanks[rep.id]);
-                                    //target.alpha = 0;
+                                    target.alpha = 0;
                                 }
                                 else {
                                     tanks[rep.id].x = rep.x;
                                     tanks[rep.id].y = rep.y;
                                     tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
                                     tanks[rep.id].scale.set(scale, scale);
-                                    //target.alpha = 0;
+                                    target.alpha = 0;
                                 }
 
+                                console.log("moving");
                                 clearTimeout(targeting_timer);
                                 targeting_timer = setTimeout(() => {
+                                    console.log("stopped");
                                     targeting_timer = null;
                                     if (rep.Hx != 0 || rep.Hy != 0) {
                                         let increment = Math.sqrt(rep.Hx * rep.Hx + rep.Hy * rep.Hy);
@@ -118,7 +121,7 @@
                                             X += increment;
                                             z = z0 + X - .0032 * X * X;
                                         } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
-                                        //target.alpha = 1;
+                                        target.alpha = 1;
                                         target.x = x;
                                         target.y = y;
                                     }
