@@ -20,8 +20,8 @@ class GameSpace {
             A: 4 + Math.random() * 6,
             x0: Math.random() * GameSpace.width,
             y0: Math.random() * GameSpace.height,
-            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .5, 2),
-            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .5, 2)
+            sx2: 2 * Math.pow(Math.random() * GameSpace.width, 2),
+            sy2: 2 * Math.pow(Math.random() * GameSpace.height, 2)
         };
     }
     static AddWalls() {
@@ -56,9 +56,14 @@ class GameSpace {
         console.log(P1);
         console.log(P2);
         console.log(P3);
+        let biome = 0;
         for (let y = 0; y < GameSpace.height; y++) {
             for (let x = 0; x < GameSpace.width; x++) {
-                GameSpace.board[y][x] = GameSpace.CalcElevation(P1, P2, P3, x, y);
+                if (y % 200 == 0 && x % 200 == 0) {
+                    biome = 1 + Math.floor(2 * Math.random());
+                }
+                let elevation = GameSpace.CalcElevation(P1, P2, P3, x, y);
+                GameSpace.board[y][x] = (elevation < 4) ? elevation : elevation + biome;
             }
         }
         console.log("create walls");
