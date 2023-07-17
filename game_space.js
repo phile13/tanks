@@ -7,20 +7,73 @@ class GameSpace {
     static GRASS = 50;
     static WALL = 99;
 
+    static PeakHeight(A, x0, y0, sx2, sy2, x, y) {
+        return (A * Math.exp(-((Math.pow(x - x0, 2) / (sx2)) + (Math.pow(y - y0, 2) / (sy2)))));
+    }
+    static CalcElevation(P1, P2, P3, x, y) {
+        return Math.floor((PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y) + PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y) + PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)) / 3);
+    }
+    static CreatePeaks() {
+        return [4 + Math.random() * 6,
+            Math.random() * GameSpace.width,
+            Math.random() * GameSpace.height,
+            2 * Math.pow(Math.random() * GameSpace.width * .5),
+            2 * Math.pow(Math.random() * GameSpace.height * .5)
+        ];
+    }
+    static AddWalls() {
+        let x1 = GameSpace.width - 1;
+        let x2 = GameSpace.width - 2;
+        for (let y = 0; y < height; y++) {
+            GameSpace.board[y][0] = 99;
+            GameSpace.board[y][1] = 99;
+            GameSpace.board[y][x2] = 99;
+            GameSpace.board[y][x1] = 99;
+        }
+
+
+        let y1 = GameSpace.height - 1;
+        let y2 = GameSpace.height - 2;
+        for (let x = 0; x < width; x++) {
+            GameSpace.board[0][x] = 99;
+            GameSpace.board[1][x] = 99;
+            GameSpace.board[y2][x] = 99;
+            GameSpace.board[y1][x] = 99;
+        }
+    }
+
     static Create(width, height) {
         GameSpace.width = width;
         GameSpace.height = height;
-        console.log("make empty board");
+
+        GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
+        let [P1, P2, P3] = GameSpace.CreatePeaks();
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                GameSpace.board[y][x] = CalcElevation(P1, P2, P3, x, y);
+            }
+        }
+
+        GameSpace.AddWalls();
+    }
+
+
+    static CreateOld(width, height) {
+        GameSpace.width = width;
+        GameSpace.height = height;
+ 
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
 
-        console.log("made empty board");
         let num_x_tiles = width / 40;
         let num_y_tiles = height / 40;
+        let tile_values = new Array(num_y_tiles).fill().map(() => new Array(num_x_tiles).fill(0));
+
 
         let elevation_change_map = [-2, -1, -1, 0, 0, 0, 0, 1, 1, 2];
         let elevation = Math.floor(10 * Math.random());
         let biome = Math.floor(10 * Math.random());
-        let values = {};
+       
 
         for (let y_tile = 0; y_tile < num_y_tiles; y_tile++) {
 
@@ -29,15 +82,14 @@ class GameSpace {
             for (let x_tile = 0; x_tile < num_x_tiles; x_tile++) {
                 let new_elevation = elevation + elevation_change_map[Math.floor(10 * Math.random())];
                 elevation = (new_elevation >= 0 && new_elevation < 10) ? new_elevation : elevation;
+
                 if (y_tile % 10 == 0 && x_tile % 10 == 0) {
                     biome = 1 + Math.floor(2 * Math.random());
                 }
 
                 let value = elevation * 10 + ((elevation < 4) ? 0 : biome);
-                if (!(value in values)) {
-                    values[value] = 1;
-                    console.log(value);
-                }
+                
+
 
                 let start_x = x_tile * 40;
                 let stop_x = (x_tile + 1) * 40;
@@ -48,8 +100,7 @@ class GameSpace {
                 }
             }
         }
-        console.log("filled board");
-
+   
         let x1 = width - 1;
         let x2 = width - 2;
         for (let y = 0; y < height; y++) {
