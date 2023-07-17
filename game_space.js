@@ -14,7 +14,7 @@ class GameSpace {
         let a = GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y);
         let b = GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y);
         let c = GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y);
-        return 10 * Math.floor((Math.max(a,b,c) + a + b + c)/4);
+        return 10 * Math.floor((Math.max(a, b, c) + a + b + c - Math.min(a, b, c))/3);
     }
     static CreatePeak() {
         return {
