@@ -83,7 +83,7 @@
                                     tanks[rep.id].anchor.set(0.5);
                                     tanks[rep.id].x = rep.x;
                                     tanks[rep.id].y = rep.y;
-                                    tanks[rep.id].scale(scale, scale);
+                                    tanks[rep.id].scale.set(scale, scale);
 
                                     app.stage.addChild(tanks[rep.id]);
                                 }
@@ -91,7 +91,7 @@
                                     tanks[rep.id].x = rep.x;
                                     tanks[rep.id].y = rep.y;
                                     tanks[rep.id].rotation = Math.atan2(rep.Hy, rep.Hx);
-                                    tanks[rep.id].scale(scale, scale);
+                                    tanks[rep.id].scale.set(scale, scale);
                                 }
                                
                                 break;
