@@ -77,6 +77,7 @@
                         if (UpdateBackground(app, rep.board)) {
                             target = PIXI.Sprite.from('target.png');
                             target.alpha = 0;
+                            target.anchor.set(0.5);
                             app.stage.addChild(target);
                         }
                     }
