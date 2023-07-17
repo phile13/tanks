@@ -138,6 +138,7 @@ class GameSpace {
     }
 
     static MoveIsOkay(radius, x, y) {
+        radius *= .05 * (9 - Math.floor(GameSpace.board[y][x] / 10));
         let start_y = Math.floor(y - radius);
         start_y = (start_y < 0) ? 0 : (start_y > GameSpace.height) ? GameSpace.height : start_y;
         let stop_y = Math.ceil(y + radius);
