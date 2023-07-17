@@ -124,7 +124,7 @@
                                             y += rep.Hy;
                                             X += increment;
                                             z = z0 + 1 * X - .0032 * X * X;
-                                        } while (board[y][x] != 99 || z >= 0 || z > 100 * Math.floor((board[y][x]-4) / 10));
+                                        } while (board[y][x] != 99 && z >= 0 && z > 100 * Math.floor((board[y][x]-4) / 10));
                                         target.alpha = 1;
                                         target.x = x;
                                         target.y = y;
