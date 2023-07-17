@@ -11,17 +11,17 @@ class GameSpace {
         return (A * Math.exp(-((Math.pow(x - x0, 2) / (sx2)) + (Math.pow(y - y0, 2) / (sy2)))));
     }
     static CalcElevation(P1, P2, P3, x, y) {
-        return 10 * Math.floor(Math.max(GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y),
-            GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y),
-            GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)));
+        return 10 * Math.floor((GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y)+
+            GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y) +
+            GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)) / 3);
     }
     static CreatePeak() {
         return {
             A: 4 + Math.random() * 6,
             x0: Math.random() * GameSpace.width,
             y0: Math.random() * GameSpace.height,
-            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .2, 2),
-            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .2, 2)
+            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .5, 2),
+            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .5, 2)
         };
     }
     static AddWalls() {
