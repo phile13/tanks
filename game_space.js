@@ -15,7 +15,7 @@ class GameSpace {
             + GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y)
             + GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)) / 3);
     }
-    static CreatePeaks() {
+    static CreatePeak() {
         return {
             A: 4 + Math.random() * 6,
             x0: Math.random() * GameSpace.width,
@@ -50,7 +50,9 @@ class GameSpace {
         GameSpace.height = height;
         console.log("create");
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
-        let [P1, P2, P3] = GameSpace.CreatePeaks();
+        let P1 = GameSpace.CreatePeak();
+        let P2 = GameSpace.CreatePeak();
+        let P3 = GameSpace.CreatePeak();
         console.log(P1);
         for (let y = 0; y < GameSpace.height; y++) {
             for (let x = 0; x < GameSpace.width; x++) {
