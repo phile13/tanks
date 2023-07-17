@@ -11,10 +11,10 @@ class GameSpace {
         return (A * Math.exp(-((Math.pow(x - x0, 2) / (sx2)) + (Math.pow(y - y0, 2) / (sy2)))));
     }
     static CalcElevation(P1, P2, P3, x, y) {
-        return 10 * Math.floor(Math.max(
-            GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y),
-            GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y),
-            GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)));
+        let a = GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y);
+        let b = GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y);
+        let c = GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y);
+        return 10 * Math.floor((Math.max(a,b,c) + a + b + c)/4);
     }
     static CreatePeak() {
         return {
