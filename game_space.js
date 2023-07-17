@@ -19,7 +19,7 @@ class GameSpace {
     static CreatePeak(x) {
         return {
             A: 5 + Math.random() * 5,
-            x0: Math.random() * GameSpace.width,
+            x0: Math.random() * GameSpace.width, 
             y0: Math.random() * GameSpace.height,
             sx2: 100000 + Math.random() * 100000 * x,
             sy2: 100000 + Math.random() * 100000 * x
