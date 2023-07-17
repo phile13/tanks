@@ -105,22 +105,23 @@
                                 clearTimeout(targeting_timer);
                                 targeting_timer = setTimeout(() => {
                                     targeting_timer = null;
-
-                                    let increment = Math.sqrt(rep.Hx * rep.Hx + rep.Hy * rep.Hy);
-                                    let x = rep.x;
-                                    let y = rep.y;
-                                    let X = 0;
-                                    let z = 0;
-                                    let z0 = 100 * Math.floor(rep.z / 10) + 10;
-                                    do {
-                                        x += rep.Hx;
-                                        y += rep.Hy;
-                                        X += increment;
-                                        z = z0 + X - .0032 * X * X;
-                                    } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
-                                    target.alpha = 0;
-                                    target.x = x;
-                                    target.y = y;
+                                    if (rep.Hx != 0 || rep.Hy != 0) {
+                                        let increment = Math.sqrt(rep.Hx * rep.Hx + rep.Hy * rep.Hy);
+                                        let x = rep.x;
+                                        let y = rep.y;
+                                        let X = 0;
+                                        let z = 0;
+                                        let z0 = 100 * Math.floor(rep.z / 10) + 10;
+                                        do {
+                                            x += rep.Hx;
+                                            y += rep.Hy;
+                                            X += increment;
+                                            z = z0 + X - .0032 * X * X;
+                                        } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
+                                        target.alpha = 0;
+                                        target.x = x;
+                                        target.y = y;
+                                    }
 
                                 }, 250);
 
