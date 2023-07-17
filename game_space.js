@@ -21,8 +21,8 @@ class GameSpace {
             A: 5 + Math.random() * 5,
             x0: Math.random() * GameSpace.width,
             y0: Math.random() * GameSpace.height,
-            sx2: 10000 + 2 * Math.pow(Math.random() * GameSpace.width, 2),
-            sy2: 10000 + 2 * Math.pow(Math.random() * GameSpace.height, 2)
+            sx2: 100000 + 2 * Math.pow(Math.random() * GameSpace.width, 2),
+            sy2: 100000 + 2 * Math.pow(Math.random() * GameSpace.height, 2)
         };
     }
     static AddWalls() {
