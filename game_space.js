@@ -49,7 +49,6 @@ class GameSpace {
     static Create(width, height) {
         GameSpace.width = width;
         GameSpace.height = height;
-        console.log("create");
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
         let P1 = GameSpace.CreatePeak();
         let P2 = GameSpace.CreatePeak();
@@ -64,9 +63,7 @@ class GameSpace {
                 GameSpace.board[y][x] = (elevation < 40) ? elevation : elevation + biome;
             }
         }
-        console.log("create walls");
         GameSpace.AddWalls();
-        console.log("created");
     }
 
 
@@ -130,7 +127,6 @@ class GameSpace {
             GameSpace.board[y2][x] = 99;
             GameSpace.board[y1][x] = 99;
         }
-        console.log("walled board");
     }
 
     static BoardToString() {

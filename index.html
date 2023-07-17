@@ -108,10 +108,10 @@
                                     target.alpha = 0;
                                 }
 
-                                console.log("moving");
+
                                 clearTimeout(targeting_timer);
                                 targeting_timer = setTimeout(() => {
-                                    console.log("stopped");
+                 
                                     targeting_timer = null;
                                     if (rep.Hx != 0 || rep.Hy != 0) {
                                         let increment = Math.sqrt(rep.Hx * rep.Hx + rep.Hy * rep.Hy);
