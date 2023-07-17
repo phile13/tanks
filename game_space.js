@@ -50,9 +50,9 @@ class GameSpace {
         GameSpace.width = width;
         GameSpace.height = height;
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
-        let P1 = GameSpace.CreatePeak(9);
-        let P2 = GameSpace.CreatePeak(5);
-        let P3 = GameSpace.CreatePeak(3);
+        let P1 = GameSpace.CreatePeak(6);
+        let P2 = GameSpace.CreatePeak(3);
+        let P3 = GameSpace.CreatePeak(1);
         console.log(P1);
         console.log(P2);
         console.log(P3);
