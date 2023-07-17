@@ -138,24 +138,29 @@ class GameSpace {
     }
 
     static MoveIsOkay(radius, x, y) {
-        radius *= .05 * (9 - Math.floor(GameSpace.board[y][x] / 10));
-        let start_y = Math.floor(y - radius);
-        start_y = (start_y < 0) ? 0 : (start_y > GameSpace.height) ? GameSpace.height : start_y;
-        let stop_y = Math.ceil(y + radius);
-        stop_y = (stop_y < 0) ? 0 : (stop_y > GameSpace.height) ? GameSpace.height : stop_y;
-        let start_x = Math.floor(x - radius);
-        start_x = (start_x < 0) ? 0 : (start_x > GameSpace.width) ? GameSpace.width : start_x;
-        let stop_x = Math.ceil(x + radius);
-        stop_x = (stop_x < 0) ? 0 : (stop_x > GameSpace.width) ? GameSpace.width : stop_x;
+        try {
+            radius *= .05 * (9 - Math.floor(GameSpace.board[y][x] / 10));
+            let start_y = Math.floor(y - radius);
+            start_y = (start_y < 0) ? 0 : (start_y > GameSpace.height) ? GameSpace.height : start_y;
+            let stop_y = Math.ceil(y + radius);
+            stop_y = (stop_y < 0) ? 0 : (stop_y > GameSpace.height) ? GameSpace.height : stop_y;
+            let start_x = Math.floor(x - radius);
+            start_x = (start_x < 0) ? 0 : (start_x > GameSpace.width) ? GameSpace.width : start_x;
+            let stop_x = Math.ceil(x + radius);
+            stop_x = (stop_x < 0) ? 0 : (stop_x > GameSpace.width) ? GameSpace.width : stop_x;
 
-        for (let Y = start_y; Y < stop_y; Y++) {
-            for (let X = start_x; X < stop_x; X++) {
-                if (GameSpace.board[Y][X] == GameSpace.WALL || GameSpace.board[Y][X] < 40) {
-                    return false;
+            for (let Y = start_y; Y < stop_y; Y++) {
+                for (let X = start_x; X < stop_x; X++) {
+                    if (GameSpace.board[Y][X] == GameSpace.WALL || GameSpace.board[Y][X] < 40) {
+                        return false;
+                    }
                 }
             }
+            return true;
         }
-        return true;
+        catch (e) {
+            return false;
+        }
     }
 }
 module.exports = GameSpace;
