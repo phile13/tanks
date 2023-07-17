@@ -18,7 +18,7 @@ class GameSpace {
     }
     static CreatePeak() {
         return {
-            A: 4 + Math.random() * 6,
+            A: 5 + Math.random() * 5,
             x0: Math.random() * GameSpace.width,
             y0: Math.random() * GameSpace.height,
             sx2: 10000 + 2 * Math.pow(Math.random() * GameSpace.width, 2),
@@ -64,7 +64,7 @@ class GameSpace {
                     biome = 1 + Math.floor(2 * Math.random());
                 }
                 let elevation = GameSpace.CalcElevation(P1, P2, P3, x, y);
-                GameSpace.board[y][x] = (elevation < 4) ? elevation : elevation + biome;
+                GameSpace.board[y][x] = (elevation < 40) ? elevation : elevation + biome;
             }
         }
         console.log("create walls");
