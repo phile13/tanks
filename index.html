@@ -118,12 +118,12 @@
                                         let y = rep.y;
                                         let X = 0;
                                         let z = 0;
-                                        let z0 = 100 * Math.floor((rep.z-4) / 10) + 50;
+                                        let z0 = 100 * Math.floor((rep.z-4) / 10) + 99;
                                         do {
                                             x += rep.Hx;
                                             y += rep.Hy;
                                             X += increment;
-                                            z = z0 + 1 * X - .0032 * X * X;
+                                            z = z0 + 1.25 * X - .0032 * X * X;
                                         } while (board[y][x] != 99 && z >= 0 && z > 100 * Math.floor((board[y][x]-4) / 10));
                                         target.alpha = 1;
                                         target.x = x;
