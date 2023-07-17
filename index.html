@@ -125,13 +125,14 @@
                                         let y = rep.y;
                                         let X = 0;
                                         let z = 0;
-                                        let z0 = 100 * Math.floor((rep.z-4) / 10) + 10;
+                                        let z0 = rep.z + 10;
+                                        let Ty = rep.Ty;
                                         do {
                                             x += rep.Hx;
                                             y += rep.Hy;
                                             X += increment;
-                                            z = z0 + 1.25 * X - .0032 * X * X;
-                                        } while (board[y][x] != 0 && z >= 0 && z > 100 * Math.floor((board[y][x]-4) / 10));
+                                            z = z0 + Ty * X - .0032 * X * X;
+                                        } while (board[y][x] != 0 && z >= 50 && z > board[y][x]);
                                         target.alpha = 1;
                                         target.x = x;
                                         target.y = y;
@@ -192,6 +193,14 @@
                             break;
                         case 68:
                             action = "R";
+                            break;
+                        case 87:
+                        case 119:
+                            action = "U";
+                            break;
+                        case 88:
+                        case 120:
+                            action = "D";
                             break;
                         case 32:
                             action = "FIRE";

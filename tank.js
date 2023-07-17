@@ -22,6 +22,7 @@ class Tank {
 	Hy = 0;
 	Zx = 0;
 	Zy = 0;
+	Ty = 1;
 	client = null;
 
 
@@ -34,6 +35,7 @@ class Tank {
 		this.Hy = 0;
 		this.Zx = 0;
 		this.Zy = 0;
+		this.Ty = 1;
 
 		this.client = client;
 		this.client.on("message", (msg) => {
@@ -78,9 +80,17 @@ class Tank {
 			}
 			else if (req.action == "FIRE") {
 
-            }
+			}
+			else if (req.action == "U") {
+				this.Ty += .05;
+				this.client.send(this.UpdateMessage());
+			}
+			else if (req.action == "D") {
+				this.Ty -= .05;
+				this.client.send(this.UpdateMessage());
+			}
 			else if (req.id in Tank.tanks) {
-				let change_requested = true;
+				let change_requested = 1;
 				let x = this.x;
 				let y = this.y;
 				switch (req.action) {
@@ -112,17 +122,23 @@ class Tank {
 						x++;
 						y--;
 						break;
+					case "U":
+						change_requested = -1;
+						break;
+					case "D":
+						change_requested = -1;
+						break;
 					case "C":
 						break;
 					default:
-						change_requested = false;
+						change_requested = 0;
 						break;
 				}
 
-				if (change_requested) {
+				if (change_requested == 1) {
 					let Zx = x / Tank.SIZE;
 					let Zy = y / Tank.SIZE;
-					 
+
 					if (GameSpace.MoveIsOkay(Tank.RADIUS, x, y) && Tank.MoveIsOkay(this.id, Zx, Zy)) {
 						this.Hx = x - this.x;
 						this.Hy = y - this.y;
@@ -157,7 +173,7 @@ class Tank {
 	}
 
 	UpdateMessage() {
-		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank","z":'+GameSpace.board[this.y][this.x]+'}';
+		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank","z":'+GameSpace.board[this.y][this.x]+',"Ty":'+this.Ty+'}';
     }
 }
 
