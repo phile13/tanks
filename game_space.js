@@ -51,7 +51,7 @@ class GameSpace {
 
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
-                GameSpace.board[y][x] = CalcElevation(P1, P2, P3, x, y);
+                GameSpace.board[y][x] = GameSpace.CalcElevation(P1, P2, P3, x, y);
             }
         }
 
