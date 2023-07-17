@@ -16,12 +16,13 @@ class GameSpace {
             + GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y)) / 3);
     }
     static CreatePeaks() {
-        return [4 + Math.random() * 6,
-            Math.random() * GameSpace.width,
-            Math.random() * GameSpace.height,
-            2 * Math.pow(Math.random() * GameSpace.width * .5),
-            2 * Math.pow(Math.random() * GameSpace.height * .5)
-        ];
+        return {
+            A: 4 + Math.random() * 6,
+            x0: Math.random() * GameSpace.width,
+            y0: Math.random() * GameSpace.height,
+            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .5),
+            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .5)
+        };
     }
     static AddWalls() {
         let x1 = GameSpace.width - 1;
@@ -47,17 +48,18 @@ class GameSpace {
     static Create(width, height) {
         GameSpace.width = width;
         GameSpace.height = height;
-
+        console.log("create");
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
         let [P1, P2, P3] = GameSpace.CreatePeaks();
-
+        console.log(P1);
         for (let y = 0; y < GameSpace.height; y++) {
             for (let x = 0; x < GameSpace.width; x++) {
                 GameSpace.board[y][x] = GameSpace.CalcElevation(P1, P2, P3, x, y);
             }
         }
-
+        console.log("create walls");
         GameSpace.AddWalls();
+        console.log("created");
     }
 
 
