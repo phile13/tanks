@@ -118,7 +118,7 @@
                                             X += increment;
                                             z = z0 + X - .0032 * X * X;
                                         } while (board[y][x] != 99 && z > 100 * Math.floor(board[y][x] / 10));
-                                        target.alpha = 0;
+                                        target.alpha = 1;
                                         target.x = x;
                                         target.y = y;
                                     }
