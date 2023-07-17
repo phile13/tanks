@@ -20,8 +20,8 @@ class GameSpace {
             A: 4 + Math.random() * 6,
             x0: Math.random() * GameSpace.width,
             y0: Math.random() * GameSpace.height,
-            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .1, 2),
-            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .1, 2)
+            sx2: 2 * Math.pow(Math.random() * GameSpace.width * .2, 2),
+            sy2: 2 * Math.pow(Math.random() * GameSpace.height * .2, 2)
         };
     }
     static AddWalls() {
@@ -54,6 +54,8 @@ class GameSpace {
         let P2 = GameSpace.CreatePeak();
         let P3 = GameSpace.CreatePeak();
         console.log(P1);
+        console.log(P2);
+        console.log(P3);
         for (let y = 0; y < GameSpace.height; y++) {
             for (let x = 0; x < GameSpace.width; x++) {
                 GameSpace.board[y][x] = GameSpace.CalcElevation(P1, P2, P3, x, y);
