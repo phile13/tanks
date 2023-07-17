@@ -57,12 +57,9 @@ class GameSpace {
         console.log(P1);
         console.log(P2);
         console.log(P3);
-        let biome = 0;
+        let biome = 1 + Math.floor(2 * Math.random());
         for (let y = 0; y < GameSpace.height; y++) {
             for (let x = 0; x < GameSpace.width; x++) {
-                if (y % 200 == 0 && x % 200 == 0) {
-                    biome = 1 + Math.floor(2 * Math.random());
-                }
                 let elevation = GameSpace.CalcElevation(P1, P2, P3, x, y);
                 GameSpace.board[y][x] = (elevation < 40) ? elevation : elevation + biome;
             }
@@ -152,7 +149,7 @@ class GameSpace {
 
         for (let Y = start_y; Y < stop_y; Y++) {
             for (let X = start_x; X < stop_x; X++) {
-                if (GameSpace.board[Y][X] == GameSpace.WALL) {
+                if (GameSpace.board[Y][X] == GameSpace.WALL || GameSpace.board[Y][X] < 40) {
                     return false;
                 }
             }
