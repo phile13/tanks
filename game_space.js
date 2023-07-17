@@ -26,7 +26,7 @@ class GameSpace {
     static AddWalls() {
         let x1 = GameSpace.width - 1;
         let x2 = GameSpace.width - 2;
-        for (let y = 0; y < height; y++) {
+        for (let y = 0; y < GameSpace.height; y++) {
             GameSpace.board[y][0] = 99;
             GameSpace.board[y][1] = 99;
             GameSpace.board[y][x2] = 99;
@@ -36,7 +36,7 @@ class GameSpace {
 
         let y1 = GameSpace.height - 1;
         let y2 = GameSpace.height - 2;
-        for (let x = 0; x < width; x++) {
+        for (let x = 0; x < GameSpace.width; x++) {
             GameSpace.board[0][x] = 99;
             GameSpace.board[1][x] = 99;
             GameSpace.board[y2][x] = 99;
@@ -51,8 +51,8 @@ class GameSpace {
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
         let [P1, P2, P3] = GameSpace.CreatePeaks();
 
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
+        for (let y = 0; y < GameSpace.height; y++) {
+            for (let x = 0; x < GameSpace.width; x++) {
                 GameSpace.board[y][x] = GameSpace.CalcElevation(P1, P2, P3, x, y);
             }
         }
