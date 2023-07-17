@@ -21,8 +21,8 @@ class GameSpace {
             A: 50 + Math.random() * 155,
             x0: Math.random() * GameSpace.width, 
             y0: Math.random() * GameSpace.height,
-            sx2: 100000 + Math.random() * 100000 * x,
-            sy2: 100000 + Math.random() * 100000 * x
+            sx2: 10000 + Math.random() * 10000 * x,
+            sy2: 10000 + Math.random() * 10000 * x
         };
     }
     static AddWalls() {
@@ -50,9 +50,9 @@ class GameSpace {
         GameSpace.width = width;
         GameSpace.height = height;
         GameSpace.board = new Array(height).fill().map(() => new Array(width).fill(0));
-        let P1 = GameSpace.CreatePeak(6);
-        let P2 = GameSpace.CreatePeak(3);
-        let P3 = GameSpace.CreatePeak(1);
+        let P1 = GameSpace.CreatePeak(16);
+        let P2 = GameSpace.CreatePeak(10);
+        let P3 = GameSpace.CreatePeak(6);
         console.log(P1);
         console.log(P2);
         console.log(P3);
