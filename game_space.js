@@ -11,7 +11,7 @@ class GameSpace {
 
     static GameTimeDataToString() {
         let now = (new Date()).getTime();
-        let game_time = new Date((((now - GameSpace.start_time) * 720) + GameSpace.start_time);
+        let game_time = new Date(((now - GameSpace.start_time) * 720) + GameSpace.start_time);
         return (game_time.getHours() + game_time.getMinutes() / 60);
 
         //let moon_brightness = .25 * (.75 - Math.cos(0.0000000024626499209 * (now - GameSpace.full_moon_date))); // 0.0000000024626499209 = 2 pi / (29.53 * 24 * 60 * 60 * 1000) 
