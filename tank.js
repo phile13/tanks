@@ -22,6 +22,7 @@ class Tank {
 	Hy = 0;
 	Zx = 0;
 	Zy = 0;
+	Tx = 1;
 	Ty = 1;
 	client = null;
 
@@ -36,6 +37,7 @@ class Tank {
 		this.Zx = 0;
 		this.Zy = 0;
 		this.Ty = 1;
+		this.Tx = 1;
 
 		this.client = client;
 		this.client.on("message", (msg) => {
