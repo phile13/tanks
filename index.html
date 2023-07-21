@@ -35,7 +35,7 @@
                         color_map.push(0);
                     }
                     else if (c < 50) {
-                        color_map.push(5*Math.cos(c) + 50 + c * 3);
+                        color_map.push(5*Math.floor(Math.cos(c)) + 50 + c * 3);
                     }
                     else if (c < 55) {
                         color_map.push(16776960);
