@@ -58,10 +58,10 @@
                                 background.beginFill(color);
                             }
                             else if (hour >= 6 || hour <= 18) {
-                                background.beginFill(color * 1.5);
+                                background.beginFill(Math.floor(color * 1.5));
                             }
                             else {
-                                background.beginFill(color / 2);
+                                background.beginFill(Math.floor(color / 2));
                             }
                             background.beginFill(color_map[board[row][col]]);
                             background.drawRect(col, row, 1, 1);
