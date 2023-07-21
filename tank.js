@@ -81,16 +81,8 @@ class Tank {
 			else if (req.action == "FIRE") {
 
 			}
-			else if (req.action == "U") {
-				this.Ty += .05;
-				this.client.send(this.UpdateMessage());
-			}
-			else if (req.action == "D") {
-				this.Ty -= .05;
-				this.client.send(this.UpdateMessage());
-			}
 			else if (req.id in Tank.tanks) {
-				let change_requested = 1;
+				let change_requested = "TANK";
 				let x = this.x;
 				let y = this.y;
 				switch (req.action) {
@@ -122,20 +114,30 @@ class Tank {
 						x++;
 						y--;
 						break;
+					case "L":
+						change_requested = "TURRET";
+						this.Tx += .05;
+						break;
+					case "R":
+						change_requested = "TURRET";
+						this.Tx -= .05;
+						break;
 					case "U":
-						change_requested = -1;
+						change_requested = "TURRET";
+						this.Ty += .05;
 						break;
 					case "D":
-						change_requested = -1;
+						change_requested = "TURRET";
+						this.Ty += .05;
 						break;
 					case "C":
 						break;
 					default:
-						change_requested = 0;
+						change_requested = "NONE";
 						break;
 				}
 
-				if (change_requested == 1) {
+				if (change_requested == "TANK") {
 					let Zx = x / Tank.SIZE;
 					let Zy = y / Tank.SIZE;
 
@@ -149,6 +151,9 @@ class Tank {
 						Tank.UpdateOtherTanks(this.UpdateMessage());
 					}
 				}
+				else if (change_requested == "TURRET") {
+					this.client.send(this.UpdateMessage());
+                }
 			}
 			else {
 				this.client.send("action[" + req.action + "]: unknown");
@@ -173,7 +178,7 @@ class Tank {
 	}
 
 	UpdateMessage() {
-		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank","z":'+GameSpace.board[this.y][this.x]+',"Ty":'+this.Ty+'}';
+		return '{"id":' + this.id + ',"x":' + this.x + ',"y":' + this.y + ',"Hx":' + this.Hx + ',"Hy":' + this.Hy + ',"type":"tank","z":' + GameSpace.board[this.y][this.x] + ',"Tx":' + this.Tx + ',"Ty":' + this.Ty + ',"hour":' + GameSpace.GameTimeDataToString()+'}';
     }
 }
 

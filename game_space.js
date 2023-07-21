@@ -6,6 +6,19 @@ class GameSpace {
 
     static WATERLINE = 50;
     static WALL = 0;
+    static start_time = (new Date()).getTime();
+    static full_moon_date = (new Date(1970, 01, 22, 7, 55)).getTime();
+
+    static GameTimeDataToString() {
+        let now = (new Date()).getTime();
+        let game_time = new Date((((now - GameSpace.start_time) * 720) + GameSpace.start_time);
+        return (game_time.getHours() + game_time.getMinutes() / 60);
+
+        //let moon_brightness = .25 * (.75 - Math.cos(0.0000000024626499209 * (now - GameSpace.full_moon_date))); // 0.0000000024626499209 = 2 pi / (29.53 * 24 * 60 * 60 * 1000) 
+
+
+        //return '{"hour":' + (game_time.getHours() + game_time.getMinutes() / 60) + ',"moon":' + moon_brightness + '}';
+    }
 
     static PeakHeight(A, x0, y0, sx2, sy2, x, y) {
         return (A * Math.exp(-((Math.pow(x - x0, 2) / (sx2)) + (Math.pow(y - y0, 2) / (sy2)))));
@@ -14,7 +27,7 @@ class GameSpace {
         let a = GameSpace.PeakHeight(P1.A, P1.x0, P1.y0, P1.sx2, P1.sy2, x, y);
         let b = GameSpace.PeakHeight(P2.A, P2.x0, P2.y0, P2.sx2, P2.sy2, x, y);
         let c = GameSpace.PeakHeight(P3.A, P3.x0, P3.y0, P3.sx2, P3.sy2, x, y);
-        return Math.floor(1 + ((Math.max(a, b, c) + a + b + c - Math.min(a, b, c))/3));
+        return Math.floor(1 + 5 + Math.random() + ((Math.max(a, b, c) + a + b + c - Math.min(a, b, c)) / 3));
     }
     static CreatePeak(x) {
         return {
