@@ -194,35 +194,35 @@
                 document.addEventListener("keydown", (event) => {
                     let action = "";
                     switch (event.keyCode) {
-                        case 36:
-                        case 103:
+                        case 36: // 7 on keypad numlock off
+                        case 103: // 7 on keypad numlock on
                             action = "NW";
                             break;
-                        case 38:
+                        case 38: // 8 on keypad numlock off
                         case 104:
                             action = "N";
                             break;
-                        case 33:
+                        case 33: // 9 on keypad numlock off
                         case 105:
                             action = "NE";
                             break;
-                        case 39:
+                        case 39: // 6 on keypad numlock off
                         case 102:
                             action = "E";
                             break;
-                        case 34:
+                        case 34: // 3 on keypad numlock off
                         case 99:
                             action = "SE";
                             break;
-                        case 40:
+                        case 40: // 2 on keypad numlock off
                         case 98:
                             action = "S";
                             break;
-                        case 35:
+                        case 35: // 1 on keypad numlock off
                         case 97:
                             action = "SW";
                             break;
-                        case 37:
+                        case 37: // 4 on keypad numlock off
                         case 100:
                             action = "W";
                             break;
@@ -230,21 +230,21 @@
                         case 101:
                             action = "C";
                             break;
-                        case 65:
+                        case 65: // a 
                             action = "L";
                             break;
-                        case 68:
+                        case 68: // d
                             action = "R";
                             break;
-                        case 87:
+                        case 87:// w
                         case 119:
                             action = "U";
                             break;
-                        case 88:
+                        case 88:// x
                         case 120:
                             action = "D";
                             break;
-                        case 32:
+                        case 32: //spacebar
                             action = "FIRE";
                             break;
                         default:
