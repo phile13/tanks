@@ -78,6 +78,9 @@ class Tank {
 				let rep_msg = '{"type":"new","id":' + this.id + ',"board":' + GameSpace.BoardToString() + ',"width":' + GameSpace.width + ',"height":' + GameSpace.height +'}';
 				//console.log(rep_msg);
 				this.client.send(rep_msg);
+				Object.values(Tank.tanks).forEach(tank => {
+					this.client.send(tank.UpdateMessage());
+				});
 				Tank.UpdateOtherTanks(this.UpdateMessage());
 			}
 			else if (req.action == "FIRE") {
