@@ -1,9 +1,7 @@
 class player{  
   static keycodes = null;
-
   
   constructor(ws){
-    this.ws = ws;
     if(player.keycodes == null){
       player.keycodes = [];
       
@@ -25,10 +23,10 @@ class player{
       player.keycodes[32] = "FIRE"; //spacebar
     }
 
-    
-    ws.addEventListener("open", () => {
-        ws.send('{"id":0,"action":"NEW"}');
-    });
+    this.ws = ws;
+    this.id = 0;
+    ws.addEventListener("open", this.New);
+    ws.addEventListener("message", this.Receive);
   }
 
   New(){
@@ -42,9 +40,25 @@ class player{
   }
   
   Send(action){
-
+    this.ws.send(`{"id":${this.id},"action":"${action}"}`);
   }
 
+  Receive(event){
+    try{
+      let msg = JSON.parse(event.data);
+      if(rep.action == "NEW"){
+        this.Add(rep);
+      }
+      else if(rep.action == "UPDATE"){
+        this.Update(rep);
+      }
+      else if(rep.action == "BOARD"){
+        this.Board(rep);
+      }
+    }
+    catch(e){
+    }
+  }
   
   
 }
