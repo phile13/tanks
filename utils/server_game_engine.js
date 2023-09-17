@@ -1,6 +1,6 @@
 class server_game_engine extends server_messenger{
   constructor(){
-
+    this.pieces = {next_id : 1};
   }
   
   ActionRequested(id, action){
@@ -15,8 +15,8 @@ class server_game_engine extends server_messenger{
     }
   }
 
-  NEW(id){
-    
+  NEW(type_id){
+    this.pieces[this.pieces.next_id] = new Piece(type_id, this.board.FindPlaceForPiece());
   }
   
   ALPHA(id, movement){
