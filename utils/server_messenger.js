@@ -1,4 +1,4 @@
-class server_messenger extends event_handler{
+class server_messenger{
   constructor(){
     this.events = {};
   }
@@ -15,8 +15,13 @@ class server_messenger extends event_handler{
   }
 
   ConnectionHandler(event){
-    let msg = JSON.parse(event.data);
-    this.ActionRequested(msg.id, msg.action);
+    try{
+      let msg = JSON.parse(event.data);
+      this.ActionRequested(msg.id, msg.action);
+    }
+    catch(err){
+
+    }
   }
 
   ActionRequested(id, action){
