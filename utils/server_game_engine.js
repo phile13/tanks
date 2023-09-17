@@ -16,7 +16,9 @@ class server_game_engine extends server_messenger{
   }
 
   NEW(type_id){
-    this.pieces[this.pieces.next_id] = new Piece(type_id, this.board.FindPlaceForPiece());
+    let id = this.pieces.next_id++;
+    this.pieces[id] = new Piece(type_id, id, this.board.FindPlaceForPiece());
+    this.
   }
   
   ALPHA(id, movement){
