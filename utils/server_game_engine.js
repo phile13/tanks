@@ -7,13 +7,23 @@ class server_game_engine extends server_messenger{
     if(action in this){
       this[action](id);
     }
+    else{
+      let [part,movement] = action.split(".");
+      if(part in this){
+        this[part](id, movement);
+      }
+    }
   }
 
   NEW(id){
     
   }
+  
+  ALPHA(id, movement){
 
-  FIRE(id){
+  }
+
+  BETA(id, movement){
 
   }
   
