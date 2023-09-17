@@ -1,6 +1,6 @@
 class server_messenger{
   constructor(){
-    this.events = {};
+
   }
 
   Init(){
