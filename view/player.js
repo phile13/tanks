@@ -20,7 +20,7 @@ class player{
       player.keycodes[87] = "BETA.U"; //w
       player.keycodes[88] = "BETA.D"; //x
       
-      player.keycodes[32] = "FIRE"; //spacebar
+      player.keycodes[32] = "BETA.FIRE"; //spacebar
     }
 
     this.ws = ws;
