@@ -47,7 +47,7 @@ class client_board{
     for(let p = 0; p < pieces.length; p++){
       let piece = pieces[p];
       if((piece.id in this.sprites) == false){
-        this.sprites[piece.id] = PIXI.Sprite.from((piece.id == this.player_id) ? 'mytank.png' : 'tank.png');
+        this.sprites[piece.id] = PIXI.Sprite.from((piece.id == this.player_id) ? 'my' + piece.type + '.png' : piece.type + '.png');
         this.sprites[piece.id].anchor.set(0.5);
         this.MoveSprite(piece);
         this.app.stage.addChild(this.sprites[piece.id]);
