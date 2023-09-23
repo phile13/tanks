@@ -1,7 +1,8 @@
 class client_board{
-  constructor(element_id){
+  constructor(element_id, ){
     this.board = null;
     this.background = null;
+    this.color_map = null;
     this.CreateColorMap();
     
     this.app = new PIXI.Application({ background: '#1099bb', view: document.getElementById(element_id) });
