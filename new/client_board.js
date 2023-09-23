@@ -39,8 +39,26 @@ class client_board{
     }
   }
 
-  PlacePieces(){
+  PlacePieces(pieces){
+    for(let p = 0; p < pieces.length; p++){
+      let piece = pieces[p];
+      if((piece.id in this.sprites) == false){
+        this.sprites[piece.id] = PIXI.Sprite.from((piece.id == this.player_id) ? 'mytank.png' : 'tank.png');
+        this.sprites[piece.id].anchor.set(0.5);
+        this.MoveSprite(piece);
+        this.app.stage.addChild(this.sprites[piece.id]);
+      }
+      else{
+        this.MoveSprite(piece);
+      } 
+    }
+  }
 
+  MoveSprite(piece, scale){
+    this.sprites[piece.id].x = piece.x;
+    this.sprites[piece.id].y = piece.y;
+    this.sprites[piece.id].rotation = Math.atan2(piece.Hy, piece.Hx);
+    this.sprites[piece.id].scale.set(scale, scale);
   }
 
   Update(update){
