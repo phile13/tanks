@@ -1,8 +1,9 @@
 class client_board{
-  constructor(element_id, ){
+  constructor(element_id){
     this.board = null;
     this.background = null;
     this.color_map = null;
+    this.player_id = -1;
     this.CreateColorMap();
     
     this.app = new PIXI.Application({ background: '#1099bb', view: document.getElementById(element_id) });
@@ -66,12 +67,15 @@ class client_board{
 
   Update(update){
     if("first_contact" in update){
+      this.player_id = update.id;
       this.board = update.board;
       this.background = new PIXI.Graphics();
       this.ApplyColorMap();
       this.app.stage.addChild(this.background);
 
-      this.PlacePieces(update.pieces);
+      if("pieces" in update){
+        this.PlacePieces(update.pieces);
+      }
     }
     else{
       if("board" in update){
