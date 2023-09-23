@@ -1,7 +1,7 @@
 class ui {
   static keycodes = null;
   
-  constructor(board_element_id){
+  constructor(type, board_element_id){
       if(ui.keycodes == null){
         ui.keycodes = {};
       
@@ -22,38 +22,16 @@ class ui {
         ui.keycodes["Space"] = "AIM.FIRE";
       }
 
-      client_controller.Register(this); 
+      this.type = type;
+      this.board = new client_board(this);
+      this.cc = new client_controller(this); 
+
+      document.addEventListener('keydown',OnKeyDownHandler);
   }
 
-  SetId(id){
-    this.id = id;
-  }
-  GetId(){
-    return this.id;
-  }
-  
-  OnKeyUpHandler(event){
+  OnKeyDownHandler(event){
     if("code" in event && event.code in ui.keycodes){
-      client_controller.Send(this.GetId(), ui.keycodes[event.code]);
+      this.cc.Send(ui.keycodes[event.code]);
     }
   }
-
-  OnServerUpdate(event){
-    if("board" in event){
-      this.UpdateBoard(event.board);  
-    }
-
-    if("pieces" in event){
-      this.UpdatePieces(event.pieces);
-    }
-  }
-
-  UpdateBoard(updates){
-
-  }
-
-  UpdatePieces(pieces){
-    
-  }
-  
 }
