@@ -67,7 +67,7 @@ class client_board{
 
   Update(update){
     if("first_contact" in update){
-      this.player_id = update.id;
+      this.player_id = update.new_id;
       this.board = update.board;
       this.background = new PIXI.Graphics();
       this.ApplyColorMap();
