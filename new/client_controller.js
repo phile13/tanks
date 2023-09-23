@@ -19,7 +19,7 @@ class client_controller{
     try{
       let msg = JSON.parse(event.data);
       if("type" in msg and msg.type == "_GAME_UPDATE_"){
-        ui.OnServerUpdate(msg);
+        this.ui.board.Update(msg);
       }
     }
     catch(e){
