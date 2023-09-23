@@ -1,30 +1,59 @@
 class ui {
   static keycodes = null;
   
-  constructor(){
+  constructor(board_element_id){
       if(ui.keycodes == null){
-        ui.keycodes = [];
-        
-        //numpad with numlock on and off
-        ui.keycodes[36] = ui.keycodes[103] = "MOVE.NW";//7
-        ui.keycodes[38] = ui.keycodes[104] = "MOVE.N"; //8 
-        ui.keycodes[33] = ui.keycodes[105] = "MOVE.NE";//9
-        ui.keycodes[39] = ui.keycodes[102] = "MOVE.E"; //6
-        ui.keycodes[34] = ui.keycodes[99] = "MOVE.SE"; //3
-        ui.keycodes[40] = ui.keycodes[98] = "MOVE.S";  //2
-        ui.keycodes[35] = ui.keycodes[97] = "MOVE.SW"; //1
-        ui.keycodes[37] = ui.keycodes[100] = "MOVE.W"; //4
+        ui.keycodes = {};
+      
+        ui.keycodes["Numpad7"] = "MOVE.NW";
+        ui.keycodes["Numpad8"] = ui.keycodes["ArrowUp"] = "MOVE.N"; 
+        ui.keycodes["Numpad9"] = "MOVE.NE";
+        ui.keycodes["Numpad6"] = ui.keycodes["ArrowRight"] = "MOVE.E";
+        ui.keycodes["Numpad3"] = "MOVE.SE"; 
+        ui.keycodes["Numpad2"] = ui.keycodes["ArrowDown"] = "MOVE.S";  
+        ui.keycodes["Numpad1"] = "MOVE.SW"; 
+        ui.keycodes["Numpad4"] = ui.keycodes["ArrowLeft"] = "MOVE.W";
   
-        ui.keycodes[65] = "AIM.L"; //a
-        ui.keycodes[68] = "AIM.R"; //d
-        ui.keycodes[87] = "AIM.U"; //w
-        ui.keycodes[88] = "AIM.D"; //x
+        ui.keycodes["KeyA"] = "AIM.L";
+        ui.keycodes["KeyD"] = "AIM.R";
+        ui.keycodes["KeyW"] = "AIM.U";
+        ui.keycodes["KeyX"] = "AIM.D";
         
-        ui.keycodes[32] = "AIM.FIRE"; //spacebar
+        ui.keycodes["Space"] = "AIM.FIRE";
       }
+
+      client_controller.Register(this); 
   }
 
+  SetId(id){
+    this.id = id;
+  }
+  GetId(){
+    return this.id;
+  }
+  
   OnKeyUpHandler(event){
+    if("code" in event && event.code in ui.keycodes){
+      client_controller.Send(this.GetId(), ui.keycodes[event.code]);
+    }
+  }
+
+  OnServerUpdate(event){
+    if("board" in event){
+      this.UpdateBoard(event.board);  
+    }
+
+    if("pieces" in event){
+      this.UpdatePieces(event.pieces);
+    }
+  }
+
+  UpdateBoard(updates){
 
   }
+
+  UpdatePieces(pieces){
+    
+  }
+  
 }
