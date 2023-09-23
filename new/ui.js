@@ -23,7 +23,7 @@ class ui {
       }
 
       this.type = type;
-      this.board = new client_board(this, board_element_id);
+      this.board = new client_board(board_element_id);
       this.cc = new client_controller(this); 
 
       document.addEventListener('keydown',OnKeyDownHandler);
