@@ -3,7 +3,7 @@ class client_controller{
     this.ui = ui;
     this.id = -1;
     this.ws = new WebSocket("ws://74.208.107.245:32123");
-    ws.addEventListener("open", this.New);
+    ws.addEventListener("open", this.Open);
     ws.addEventListener("message", this.Receive);
   }
 
@@ -18,7 +18,9 @@ class client_controller{
   Receive(event){
     try{
       let msg = JSON.parse(event.data);
-      ui.OnServerUpdate(msg);
+      if("type" in msg and msg.type == "_GAME_UPDATE_"){
+        ui.OnServerUpdate(msg);
+      }
     }
     catch(e){
     }
