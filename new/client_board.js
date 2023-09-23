@@ -31,11 +31,13 @@ class client_board{
   }
 
   ApplyColorMap(){
-    for (let row = 0; row < this.num_rows; row++) {
-      for (let col = 0; col < this.num_cols; col++) {
-        background.beginFill(color_map[this.board[row][col]]);
-        background.drawRect(col, row, 1, 1);
-        background.endFill();
+    let num_rows = this.board.length;
+    let num_cols = this.board[0].length;
+    for (let row = 0; row < num_rows; row++) {
+      for (let col = 0; col < num_cols; col++) {
+        this.background.beginFill(color_map[this.board[row][col]]);
+        this.background.drawRect(col, row, 1, 1);
+        this.background.endFill();
       }
     }
   }
