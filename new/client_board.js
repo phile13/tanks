@@ -39,28 +39,32 @@ class client_board{
     }
   }
 
+  PlacePieces(){
+
+  }
+
   Update(update){
-    if("board" in update){
+    if("first_contact" in update){
       this.board = update.board;
-      
-      if("first_contact" in update){
-        this.background = new PIXI.Graphics();
-        this.ApplyColorMap();
-        this.app.stage.addChild(this.background);
-      }
-      else{
+      this.background = new PIXI.Graphics();
+      this.ApplyColorMap();
+      this.app.stage.addChild(this.background);
+
+      this.PlacePieces(update.pieces);
+    }
+    else{
+      if("board" in update){
+        this.board = update.board;
         this.background.beginFill(0x0);
         this.background.drawRect(0, 0, this.board[0].length, this.board.length);
         this.background.endFill();
   
         this.ApplyColorMap();
+        }
       }
-    }
-
-    if("pieces" in update){
-      for(let p = 0; p < update.pieces.length; p++){
-        let piece = update.pieces[p];
-        
+  
+      if("pieces" in update){
+        this.PlacePieces(update.pieces);
       }
     }
   }
