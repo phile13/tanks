@@ -46,6 +46,7 @@ dclass client_board{
   PlacePieces(pieces){
     for(let p = 0; p < pieces.length; p++){
       let piece = pieces[p];
+      
       if((piece.id in this.sprites) == false){
         this.sprites[piece.id] = PIXI.Sprite.from((piece.id == this.player_id) ? 'my' + piece.type + '.png' : piece.type + '.png');
         this.sprites[piece.id].anchor.set(0.5);
@@ -58,7 +59,8 @@ dclass client_board{
     }
   }
 
-  MoveSprite(piece, scale){
+  MoveSprite(piece){
+    let scale = 1 - (.05 * (9 - Math.floor(piece.z / 10)));
     this.sprites[piece.id].x = piece.x;
     this.sprites[piece.id].y = piece.y;
     this.sprites[piece.id].rotation = Math.atan2(piece.Hy, piece.Hx);
