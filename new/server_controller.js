@@ -9,6 +9,18 @@ class server_controller{
     console.log("Listening");
   }
 
+  SendFirstContactMessage(id,board,pieces){
+    this.Send({type : "_FIRST_CONTACT_", new_id : id, board : board, pieces : pieces});
+  }
+
+  SendBoardUpdateMessage(id,board,pieces){
+    this.Send({type : "_BOARD_UPDATE_", board : board});
+  }
+
+  SendPiecesUpdateMessage(id,board,pieces){
+    this.Send({type : "_PIECES_UPDATE_", pieces : pieces});
+  }
+
   Send(obj){
     this.ws.send(JSON.stringify(obj));
   }
