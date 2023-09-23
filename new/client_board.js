@@ -1,4 +1,4 @@
-class client_board{
+dclass client_board{
   constructor(element_id){
     this.board = null;
     this.background = null;
