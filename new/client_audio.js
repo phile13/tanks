@@ -16,7 +16,7 @@ class client_audio {
   
   start(){
     if(this.ready){
-      this.reset();
+      this.stop();
       navigator.mediaDevices.getUserMedia({ audio: true })
           .then(stream => {
             this.stream_being_captured = stream;
