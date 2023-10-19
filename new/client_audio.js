@@ -1,6 +1,5 @@
 class client_audio {
-  constructor(id, socket){
-    this.id = id;
+  constructor(socket){
     this.socket = socket;
     this.mime_type = null;
     this.mediaRecorder = null;
