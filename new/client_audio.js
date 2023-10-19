@@ -20,8 +20,8 @@ class client_audio {
       navigator.mediaDevices.getUserMedia({ audio: true })
           .then(stream => {
             this.stream_being_captured = stream;
-            this.media_recorder = new MediaRecorder(this.stream_being_captured);
-            this.media_recorder.addEventListener("dataavailable", this.data_handler);
+            this.media_recorder = new MediaRecorder(this.stream_being_captured, { 'mimeType' : 'audio/webm' });
+            this.media_recorder.addEventListener("dataavailable", this.recording_handler);
             this.mime_type = this.media_recorder.mimeType;
             
             this.media_recorder.start(50);
@@ -32,16 +32,10 @@ class client_audio {
       }
   }
 
-  data_handler(evt){
-    let reader = new FileReader();
-    reader.readAsDataURL(new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' }));
-    reader.onloadend = () => {
-      this.socket.send(`{"id":"${this.id}","type","audio","data":"${reader,result.split(";base64")[1]}"}`);
-    }
+  recording_handler(evt){
+    this.socket.send(new Blob(evt.data, { 'type' : 'audio/webm' }));
   }
   
-  
-
  stop(){
    if(this.ready){
       if(this.media_recorder){
