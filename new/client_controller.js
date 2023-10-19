@@ -15,6 +15,10 @@ class client_controller{
     this.ws.send(`{"id":${this.id},"action":"${action}"}`);
   }
 
+  SendBinary(blob){
+    this.ws.send(blob);
+  }
+
   Receive(event){
     try{
       let msg = JSON.parse(event.data);
