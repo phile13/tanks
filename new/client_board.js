@@ -68,7 +68,12 @@ class client_board{
   }
 
   Update(update){
-    if("first_contact" in update){
+    if(update instanceof Blob){
+      const audioUrl = URL.createObjectURL(update);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+    else if("first_contact" in update){
       this.player_id = update.new_id;
       this.board = update.board;
       this.background = new PIXI.Graphics();
