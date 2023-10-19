@@ -30,11 +30,23 @@ class ui {
       this.mic = new client_audio(this.cc);
     
       document.addEventListener('keydown',OnKeyDownHandler);
+      document.addEventListener('keydown',OnKeyUpHandler);
   }
 
   OnKeyDownHandler(event){
     if("code" in event && event.code in ui.keycodes){
-      this.cc.Send(ui.keycodes[event.code]);
+      if(event.code in ui.keycodes){ 
+        this.cc.Send(ui.keycodes[event.code]);
+      }
+      else if(event.code == "KeyPlus"){
+        this.mic.start();
+      }
+    }
+  }
+  
+  OnKeyUpHandler(event){
+    if(event.code == "KeyPlus"){
+      this.mic.stop();
     }
   }
 }
