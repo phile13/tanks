@@ -1,64 +1,60 @@
 class client_audio {
-  audioBlobs = [];
-  mediaRecorder = null;
-  streamBeingCaptured =null;
-  
-  constructor(){
-    this.reset();
-  }
-
-  reset(){
-    this.audioBlobs = [];
+  constructor(id, socket){
+    this.id = id;
+    this.socket = socket;
+    this.mime_type = null;
     this.mediaRecorder = null;
-    this.streamBeingCaptured =null;
-  }
-
-  init(){
+    this.stream_being_captured = null;
+    
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-      return Promise.reject(new Error('mediaDevices API or getUserMedia method is not supported in this browser.'));
+      this.ready = false;
     }
     else{
-      return navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            client_audio.streamBeingCaptured = stream;
-            client_audio.mediaRecorder = new MediaRecorder(stream);
-            client_audio.audioBlobs = [];
-          
-            client_audio.mediaRecorder.addEventListener("dataavailable", event => {
-                client_audio.audioBlobs.push(event.data);
-            });
-            client_audio.mediaRecorder.start();
-        });
+      this.ready = true;
     }
   }
-
-  record(){
-    client_audio.start()
-      .then(() => {
-        console.log("Recording");
-      })
-      .catch(error => {
-        if (error.message.includes("mediaDevices API or getUserMedia method is not supported in this browser.")) {       
-          console.log("To record audio, use browsers like Chrome and Firefox.");
-        }
-      });
+  
+  start(){
+    if(this.ready){
+      this.reset();
+      navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(stream => {
+            this.stream_being_captured = stream;
+            this.media_recorder = new MediaRecorder(this.stream_being_captured);
+            this.media_recorder.addEventListener("dataavailable", this.data_handler);
+            this.mime_type = this.media_recorder.mimeType;
+            
+            this.media_recorder.start(50);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+      }
   }
 
-  stop(){
-    return new Promise(resolve => {
-      let mimeType = client_audio.mediaRecorder.mimeType;
+  data_handler(evt){
+    let reader = new FileReader();
+    reader.readAsDataURL(new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' }));
+    reader.onloadend = () => {
+      this.socket.send(`{"id":"${this.id}","type","audio","data":"${reader,result.split(";base64")[1]}"}`);
+    }
+  }
   
-         
-      client_audio.mediaRecorder.addEventListener("stop", () => {
-        let audioBlob = new Blob(client_audio.audioBlobs, { type: mimeType });     
-        resolve(audioBlob);
-      });
-      client_audio.mediaRecorder.stop();
-      client_audio.streamBeingCaptured.getTracks().forEach(track => track.stop());
-      client_audio.mediaRecorder = null;
-      client_audio.streamBeingCaptured = null;
-    });
+  
 
+ stop(){
+   if(this.ready){
+      if(this.media_recorder){
+        this.media_recorder.stop();
+      }
+      if(this.stream_being_captured){
+        this.stream_being_captured.getTracks().forEach(track => track.stop());
+      }
+      
+      this.mime_type = null;
+      this.mediaRecorder = null;
+      this.stream_being_captured = null;
+   }
   }
 
 }
