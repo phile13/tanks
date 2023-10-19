@@ -33,7 +33,7 @@ class client_audio {
   }
 
   recording_handler(evt){
-    this.socket.send(new Blob(evt.data, { 'type' : 'audio/webm' }));
+    this.socket.SendBinary(new Blob(evt.data, { 'type' : 'audio/webm' }));
   }
   
  stop(){
