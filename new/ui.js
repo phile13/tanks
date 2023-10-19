@@ -38,14 +38,14 @@ class ui {
       if(event.code in ui.keycodes){ 
         this.cc.Send(ui.keycodes[event.code]);
       }
-      else if(event.code == "KeyPlus"){
+      else if(event.code == "NumpadAdd"){
         this.mic.start();
       }
     }
   }
   
   OnKeyUpHandler(event){
-    if(event.code == "KeyPlus"){
+    if(event.code == "NumpadAdd"){
       this.mic.stop();
     }
   }
